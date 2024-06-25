@@ -152,7 +152,7 @@ Contributions are what make the open source community such an amazing place to b
 <!-- LICENSE -->
 ## License
 
-Distributed under the MIT License. See `LICENSE` for more information.
+Distributed under the MIT License. See [LICENSE][license-url] for more information.
 
 <!-- CONTACT -->
 ## Contact
@@ -170,6 +170,6 @@ Please contact [Isabela Almeida](mb.isabela42@gmail.com) if you have any enquire
 [issues-shield]: https://img.shields.io/github/issues/isabela42/HyDRA.svg?style=for-the-badge
 [issues-url]: https://github.com/isabela42/HyDRA/issues
 [license-shield]: https://img.shields.io/github/license/isabela42/HyDRA.svg?style=for-the-badge
-[license-url]: https://github.com/isabela42/HyDRA/blob/master/LICENSE.txt
+[license-url]: https://github.com/isabela42/HyDRA/blob/master/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/isabela42/

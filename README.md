@@ -88,15 +88,29 @@ The scripts are organised as described below, where [S] stands for scripts meant
     * Script 22 [H] Summary of lncRNA discovery steps (22H1)
 
 <!-- GETTING STARTED -->
-## Pipeline prerequisites
+## How to run the HyDRA pipeline 
 
-HyDRA is structured in BASH scripts that write and submit portable batch system (PBS) jobs, meaning that our scripts were designed to run in a high-performance computer (HPC) where computational tasks, or simply jobs, are allocated in a PBS system.  You can choose to clone the repo 
+HyDRA is available in a series of BASH scripts that can be run on i) terminal stdin; ii) Docker container image; or iii) HPC PBS machines. You can choose to clone the repo 
   
    ```sh
    git clone https://github.com/isabela42/HyDRA.git
    ```
 
-or <a href="#run-from-comand-line">run individual commands</a>, which can be parsed in any terminal running BASH.
+and run either:
+
+-  <a href="#ipda_HyDRA.sh">run individual commands with ipda_HyDRA.sh</a>, which can be parsed in any terminal running BASH.
+- <a href="#ipda_HyDRA.sh">run individual commands with ipda_HyDRA.sh</a>, which can be parsed in any terminal running BASH.
+- <a href="#ipda_HyDRA_Docker.sh">run individual commands on the HyDRA Docker container with ipda_HyDRA_Docker.sh</a>, which can be parsed in any terminal running BASH. To build HyDRA's Docker container image, users will need to install Docker on their machines and run
+
+   ```sh
+   docker build -t hydra:1.0.1 .
+   ```
+
+Users choosing to run HyDRA from their pr
+
+structured in BASH scripts that write and submit portable batch system (PBS) jobs, meaning that our scripts were designed to run in a high-performance computer (HPC) where computational tasks, or simply jobs, are allocated in a PBS system.  
+
+
 
 ### Tools
 

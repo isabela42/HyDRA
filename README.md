@@ -109,7 +109,7 @@ Users can choose to build HyDRA's Docker container image. To do so, users will n
 
   Users can also choose to build the container image directly from VScode. Image building time varies with machine power - in our tests it took from 566s to 1826s. Image size is 22.7GB when build on iMac.
 
-Alternatively, users can choose to locally install all required tools ([docker/tools files](https://github.com/isabela42/HyDRA/tree/main/docker/tools)") using the following command lines:
+Alternatively, users can choose to locally install all required tools ([docker/tools files](https://github.com/isabela42/HyDRA/tree/main/docker/tools)) using the following command lines:
 
 ```sh
 bash docker/tools/wget_requirements.sh

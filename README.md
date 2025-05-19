@@ -30,8 +30,8 @@
     <li><a href="#usage">Usage</a></li>
     <ul>
         <li><a href="#hydra-with-docker-container-image">Docker container image</a></li>
-        <li><a href="#hydra-with-terminal-stdin">terminal stdin</a></li>
-        <li><a href="#hydra-with-write-to-pbs-bash-files">write-to-pbs BASH files</a></li>
+        <li><a href="#hydra-with-terminal-stdin">Terminal stdin</a></li>
+        <li><a href="#hydra-with-write-to-pbs-bash-files">Write-to-pbs BASH files</a></li>
       </ul>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
@@ -109,7 +109,7 @@ Users can choose to build HyDRA's Docker container image. To do so, users will n
 
   Users can also choose to build the container image directly from VScode. Image building time varies with machine power - in our tests it took from 566s to 1826s. Image size is 22.7GB when build on iMac.
 
-Alternatively, users can choose to locally install all required tools (<a href="#https://github.com/isabela42/HyDRA/tree/main/docker/tools">docker/tools files</a>) using the following command lines:
+Alternatively, users can choose to locally install all required tools ([docker/tools files](https://github.com/isabela42/HyDRA/tree/main/docker/tools)") using the following command lines:
 
 ```sh
 bash docker/tools/wget_requirements.sh
@@ -123,7 +123,7 @@ Please make sure you meet all tool requirements before running the pipeline.
 
 ### Input files
 
-In addition to paired short-read RNAseq and unpaired long-read RNAseq data, users will also need a series of additional input files throughout the pipeline. Please notice that a full description of these is available in <a href="#https://github.com/isabela42/HyDRA/blob/main/ipda_HyDRA.sh">ipda_HyDRA.sh</a>/<a href="#https://github.com/isabela42/HyDRA/blob/main/ipda_HyDRA_docker.sh">ipda_HyDRA_Docker.sh</a>
+In addition to paired short-read RNAseq and unpaired long-read RNAseq data, users will also need a series of additional input files throughout the pipeline. Please notice that a full description of these is available in [ipda_HyDRA.sh](https://github.com/isabela42/HyDRA/blob/main/ipda_HyDRA.sh)/[ipda_HyDRA_Docker.sh](https://github.com/isabela42/HyDRA/blob/main/ipda_HyDRA_docker.sh).
 
 - adapters_fasta="/path/from/working/dir/to/adapters_trimmomatic.fa"
 - ribosomal_rna_ref="/path/from/working/dir/to/ribosomalRNA.fa"
@@ -134,7 +134,7 @@ In addition to paired short-read RNAseq and unpaired long-read RNAseq data, user
 - reference_gmap_db=reference_GMAP_genome_db_dir
 - referencedir=/path/from/working/dir/to/
 - transcriptome_bed="/path/from/working/dir/to/ref-transcriptome.bed"
-- lncrnadb="/path/from/working/dir/to/lncRNAdb.bed" # we provide a default option you may use <a href="#https://github.com/isabela42/HyDRA/tree/main/docker/data/InHouse_lncRNAdb.bed">InHouse_lncRNAdb.bed</a>
+- lncrnadb="/path/from/working/dir/to/lncRNAdb.bed" # we provide a default option you may use [InHouse_lncRNAdb.bed](https://github.com/isabela42/HyDRA/tree/main/docker/data/InHouse_lncRNAdb.bed)
 - lncrnadb_fasta="/path/from/working/dir/to/lncRNAdb.fasta" #bedtools getfasta -name -fi genome.fa -bed ${lncrnadb} > lncRNAdb.fasta
 - genome_proteins="/path/from/working/dir/to/protein-coding_reference-annotation.bed"
 - gencodegenome="/path/from/working/dir/to/gencode.genome.fa" # e.g. <ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_36/GRCh38.p13.genome.fa.gz>
@@ -148,17 +148,17 @@ In addition to paired short-read RNAseq and unpaired long-read RNAseq data, user
 
 ### HyDRA with Docker container image
 
-HyDRA can be run using a Docker container image. To do so, users may choose to run <a href="#https://github.com/isabela42/HyDRA/blob/main/ipda_HyDRA_docker.sh">individual commands on the HyDRA Docker container with ipda_HyDRA_Docker.sh</a>, which can be parsed in any terminal running BASH. Please see the help menu with `bash ipda_HyDRA_Docker.sh -h`, replace any necessary input info and parse individual command lines in any terminal running BASH. See info on how to <a href="#tools">build HyDRA's Docker container image here</a>.
+HyDRA can be run using a Docker container image. To do so, users may choose to run individual commands on the HyDRA Docker container with [ipda_HyDRA_Docker.sh](https://github.com/isabela42/HyDRA/blob/main/ipda_HyDRA_docker.sh). These commands can be parsed in any terminal running BASH. Please see the help menu with `bash ipda_HyDRA_Docker.sh -h`, replace any necessary input info and parse individual command lines in any terminal running BASH. See info on how to <a href="#tools">build HyDRA's Docker container image here</a>.
 
 Alternatively, users can also choose to i) add <a href="#input-files">all input files</a> to /docker/data folder before ii) building container image, iii) initiate the container with `docker run -it hydra:1.0.1` and iv) run <a href="#hydra-with-terminal-stdin">terminal stdin commands</a>.
 
 ### HyDRA with terminal stdin
 
-Users can also choose to execute each one of the commands in <a href="#https://github.com/isabela42/HyDRA/blob/main/ipda_HyDRA.sh">ipda_HyDRA.sh</a>, replacing the variables names with respective info. Please see the help menu with `bash ipda_HyDRA.sh -h`, replace any necessary input info and parse individual command lines in any terminal running BASH. Please make sure you have all <a href="#tools">tools</a> instaled and check that you meet their requirements.
+Users can also choose to execute each one of the commands in [ipda_HyDRA.sh](https://github.com/isabela42/HyDRA/blob/main/ipda_HyDRA.sh), replacing the variables names with respective info. Please see the help menu with `bash ipda_HyDRA.sh -h`, replace any necessary input info and parse individual command lines in any terminal running BASH. Please make sure you have all <a href="#tools">tools</a> instaled and check that you meet their requirements.
 
 ### HyDRA with write-to-pbs BASH files
 
-HyDRA can also be run with the series of <a href="#https://github.com/isabela42/HyDRA/tree/main/write-to-pbs">write-to-pbs BASH files</a> to write and submit jobs on a high-performance computer (HPC) managed with a portable batch system (PBS). If you are running HyDRA with these scripts, make sure you have all of the following ready to go before you run any of them:
+HyDRA can also be run with the series of [write-to-pbs BASH files](https://github.com/isabela42/HyDRA/tree/main/write-to-pbs) to write and submit jobs on a high-performance computer (HPC) managed with a portable batch system (PBS). If you are running HyDRA with these scripts, make sure you have all of the following ready to go before you run any of them:
 
 1. All tools are installed and your local copy of the script is updated with
 

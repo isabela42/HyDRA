@@ -5,7 +5,7 @@ usage(){
 echo "
 Written by Isabela Almeida
 Created on Apr 24, 2025
-Last modified on May 16, 2025
+Last modified on May 19, 2025
 Version: ${version}
 
 #  _    _       _____  _____                    _            _ _            
@@ -30,16 +30,39 @@ Please contact Isabela Almeida at mb.isabela42@gmail.com if you encounter any pr
 "
 }
 
-#  ____       _   _   _                 
-# / ___|  ___| |_| |_(_)_ __   __ _ ___ 
-# \___ \ / _ \ __| __| | '_ \ / _` / __|
-#  ___) |  __/ |_| |_| | | | | (_| \__ \
-# |____/ \___|\__|\__|_|_| |_|\__, |___/
-#                             |___/     
+#  _____ ______ _______    _____     _______ _    _  _____ 
+# / ____|  ____|__   __|  |  __ \ /\|__   __| |  | |/ ____|
+#| (___ | |__     | |     | |__) /  \  | |  | |__| | (___  
+# \___ \|  __|    | |     |  ___/ /\ \ | |  |  __  |\___ \ 
+# ____) | |____   | |     | |  / ____ \| |  | |  | |____) |
+#|_____/|______|  |_|     |_| /_/    \_\_|  |_|  |_|_____/ 
 
-project_output_dir="path/from/working/dir/to/Project_Name/"
-short_raw_dir="path/from/working/dir/to/data_short/" # Raw short_*1.f* and short_*2.f* files in fastq, fastq.gz, fq and fq.gz accepted
-long_raw_dir="path/from/working/dir/to/data_long/" # Raw long_read.f* file(s) in fastq, fastq.gz, fq and fq.gz accepted
+# Set path to raw data and project
+project_output_dir="/path/from/working/dir/to/Project_Name/"
+short_raw_dir="/path/from/working/dir/to/data_short/" # Raw short_*1.f* and short_*2.f* files in fastq, fastq.gz, fq and fq.gz accepted
+long_raw_dir="/path/from/working/dir/to/data_long/" # Raw long_read.f* file(s) in fastq, fastq.gz, fq and fq.gz accepted
+
+# Set path to additional files
+# WARNING: Description available next to each step
+adapters_fasta="/path/from/working/dir/to/adapters_trimmomatic.fa"
+ribosomal_rna_ref="/path/from/working/dir/to/ribosomalRNA.fa"
+genome_bowtie2_index="/path/from/working/dir/to/ref_genome_bowtie2"
+reference_gene="/path/from/working/dir/to/ref_gene.bed"
+busco_odb9="/path/from/working/dir/to/BuscoLineages/eukaryota_odb9"
+reference_fasta="/path/from/working/dir/to/ref-transcriptome.fasta"
+reference_gmap_db=reference_GMAP_genome_db_dir
+referencedir=/path/from/working/dir/to/
+transcriptome_bed="/path/from/working/dir/to/ref-transcriptome.bed"
+lncrnadb="/path/from/working/dir/to/lncRNAdb.bed" # as a default you may use docker/data/InHouse_lncRNAdb.bed file
+lncrnadb_fasta="/path/from/working/dir/to/lncRNAdb.fasta" #bedtools getfasta -name -fi genome.fa -bed ${lncrnadb} > lncRNAdb.fasta
+genome_proteins="/path/from/working/dir/to/protein-coding_reference-annotation.bed"
+gencodegenome="/path/from/working/dir/to/gencode.genome.fa" # e.g. <ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_36/GRCh38.p13.genome.fa.gz>
+gencodebed="/path/from/working/dir/to/gencode.v36.annotation.bed"
+transgtf="/path/from/working/dir/to/ref-transcriptome.gtf"
+ptngtf="/path/from/working/dir/to/gencode.v36.proteincoding.gtf" # Protein-coding transcripts were retrieved using grep "^#\|protein_coding"
+lncrnagtf="/path/from/working/dir/to/gencode.v36.long_noncoding_RNAs.gtf" # e.g. <ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_36/gencode.v36.long_noncoding_RNAs.gtf.gz>
+goodlncrnagtf="/path/from/working/dir/to/gencode.v36.confirmed_long_noncoding_RNAs.gtf" # grep -v "TEC" out of above (to be experimentally confirmed transcripts)
+
 
 #  _____  ______          _____     _____  _____  ______      _____  _____   ____   _____ ______  _____ _____ _____ _   _  _____ 
 # |  __ \|  ____|   /\   |  __ \|  |  __ \|  __ \|  ____|    |  __ \|  __ \ / __ \ / ____|  ____|/ ____/ ____|_   _| \ | |/ ____|
@@ -181,7 +204,7 @@ docker run --rm \
   -c "\
     thislogdate=$(date +'%d%m%Y%H%M%S%Z') && \
     name="short_read_stem"\
-    python /tools/TranscriptomeAssemblyTools/FilterUncorrectabledPEfastq.py -1 /output/hydra02S1_short-cor_Rcorrector_DATE/short_read_R1.cor.fq.gz -2 /output/hydra02S1_short-cor_Rcorrector_DATE/short_read_R2.cor.fq.gz -s ${name}\
+    python /tools/TranscriptomeAssemblyTools/utilities/FilterUncorrectabledPEfastq.py -1 /output/hydra02S1_short-cor_Rcorrector_DATE/short_read_R1.cor.fq.gz -2 /output/hydra02S1_short-cor_Rcorrector_DATE/short_read_R2.cor.fq.gz -s ${name}\
     mv /output/rmunfixable_${name}.log /output/hydra02S2_filter-uncor_FUPER_${thislogdate}/\
     mv /output/unfixrm_${name}*1.cor.fq /output/hydra02S2_filter-uncor_FUPER_${thislogdate}\
     mv /output/unfixrm_${name}*2.cor.fq /output/hydra02S2_filter-uncor_FUPER_${thislogdate}\
@@ -907,7 +930,7 @@ docker run --rm \
 ###############################################################
 
 ## STEP 16H1 [resources: -m 20 -c 16 -w "10:00:00"]
-# WARNING 1: User must provide: name of reference_GMAP_genome_db_dir and its path separately; reference transcriptome BED file; lncRNA database BED file
+# WARNING 1: User must provide: name of reference_GMAP_genome_db_dir and its path separately; reference transcriptome BED file; lncRNA database BED file, as a default you may use docker/data/InHouse_lncRNAdb.bed file
 # WARNING 2: Same step can be done for Trinity assembly. Simply replace input info and stem of outputs
 # WARNING 3: Please set
 thislogdate=$(date +'%d%m%Y%H%M%S%Z')
@@ -929,9 +952,9 @@ docker run --rm \
     bedtools intersect -wo -s -f 0.75 -r -a /output/hydra16H1_transcriptome-annotation_BedTools_${thislogdate}/transcripts/transcripts.refgenome_stem.bed -b /data_transcriptome/ref-transcriptome.bed >> /output/hydra16H1_transcriptome-annotation_BedTools_${thislogdate}/transcripts/transcripts.refgenome_stem.genomefeatures.bed\
     bedtools intersect -s -f 0.75 -r -C -a /output/hydra16H1_transcriptome-annotation_BedTools_${thislogdate}/transcripts/transcripts.refgenome_stem.bed -b /data_transcriptome/ref-transcriptome.bed >> /output/hydra16H1_transcriptome-annotation_BedTools_${thislogdate}/transcripts/transcripts.refgenome_stem.genomecounts.bed\
     bedtools intersect -v -wa -s -f 0.75 -r -a /output/hydra16H1_transcriptome-annotation_BedTools_${thislogdate}/transcripts/transcripts.refgenome_stem.bed -b /data_transcriptome/ref-transcriptome.bed >> /output/hydra16H1_transcriptome-annotation_BedTools_${thislogdate}/transcripts/transcripts.refgenome_stem.notingenome.bed\
-    bedtools intersect -wo -s -f 0.75 -r -a /output/hydra16H1_transcriptome-annotation_BedTools_${thislogdate}/transcripts/transcripts.refgenome_stem.notingenome.bed -b /data_lncRNA/lncRNAdb.bed >> /output/hydra16H1_transcriptome-annotation_BedTools_${thislogdate}/transcripts/transcripts.refgenome_stem.lncRNAfeatures.bed\
-    bedtools intersect -s -f 0.75 -r -C -a /output/hydra16H1_transcriptome-annotation_BedTools_${thislogdate}/transcripts/transcripts.refgenome_stem.notingenome.bed -b /data_lncRNA/lncRNAdb.bed >> /output/hydra16H1_transcriptome-annotation_BedTools_${thislogdate}/transcripts/transcripts.refgenome_stem.lncRNAcounts.bed\
-    bedtools intersect -v -wa -s -f 0.75 -r -a /output/hydra16H1_transcriptome-annotation_BedTools_${thislogdate}/transcripts/transcripts.refgenome_stem.notingenome.bed -b /data_lncRNA/lncRNAdb.bed /data_transcriptome/ref-transcriptome.bed >> /output/hydra16H1_transcriptome-annotation_BedTools_${thislogdate}/transcripts/transcripts.refgenome_stem.novel.bed\
+    bedtools intersect -wo -s -f 0.75 -r -a /output/hydra16H1_transcriptome-annotation_BedTools_${thislogdate}/transcripts/transcripts.refgenome_stem.notingenome.bed -b /data_lncRNA/InHouse_lncRNAdb.bed >> /output/hydra16H1_transcriptome-annotation_BedTools_${thislogdate}/transcripts/transcripts.refgenome_stem.lncRNAfeatures.bed\
+    bedtools intersect -s -f 0.75 -r -C -a /output/hydra16H1_transcriptome-annotation_BedTools_${thislogdate}/transcripts/transcripts.refgenome_stem.notingenome.bed -b /data_lncRNA/InHouse_lncRNAdb.bed >> /output/hydra16H1_transcriptome-annotation_BedTools_${thislogdate}/transcripts/transcripts.refgenome_stem.lncRNAcounts.bed\
+    bedtools intersect -v -wa -s -f 0.75 -r -a /output/hydra16H1_transcriptome-annotation_BedTools_${thislogdate}/transcripts/transcripts.refgenome_stem.notingenome.bed -b /data_lncRNA/InHouse_lncRNAdb.bed /data_transcriptome/ref-transcriptome.bed >> /output/hydra16H1_transcriptome-annotation_BedTools_${thislogdate}/transcripts/transcripts.refgenome_stem.novel.bed\
     bedtools intersect  -wo -s -f 0.5 -e -a /output/hydra16H1_transcriptome-annotation_BedTools_${thislogdate}/transcripts/transcripts.refgenome_stem.novel.bed -b /data_lncRNA/lncRNAdb.bed /data_transcriptome/ref-transcriptome.bed >> /output/hydra16H1_transcriptome-annotation_BedTools_${thislogdate}/transcripts/transcripts.refgenome_stem.potentialfragment.bed\
     cut -f4 /output/hydra16H1_transcriptome-annotation_BedTools_${thislogdate}/transcripts/transcripts.refgenome_stem.genomefeatures.bed >> /output/hydra16H1_transcriptome-annotation_BedTools_${thislogdate}/transcripts/transcripts.refgenome_stem.tmp_a ; cut -d'"' -f2,6 /output/hydra16H1_transcriptome-annotation_BedTools_${thislogdate}/transcripts/transcripts.refgenome_stem.genomefeatures.bed | tr '"' '\t' >> /output/hydra16H1_transcriptome-annotation_BedTools_${thislogdate}/transcripts/transcripts.refgenome_stem.tmp_b ; grep -Po 'gene_biotype "\K.*?(?=")' /output/hydra16H1_transcriptome-annotation_BedTools_${thislogdate}/transcripts/transcripts.refgenome_stem.genomefeatures.bed >> /output/hydra16H1_transcriptome-annotation_BedTools_${thislogdate}/transcripts/transcripts.refgenome_stem.tmp_c ; grep -Po 'transcript_biotype "\K.*?(?=")' /output/hydra16H1_transcriptome-annotation_BedTools_${thislogdate}/transcripts/transcripts.refgenome_stem.genomefeatures.bed >> /output/hydra16H1_transcriptome-annotation_BedTools_${thislogdate}/transcripts/transcripts.refgenome_stem.tmp_d ; paste /output/hydra16H1_transcriptome-annotation_BedTools_${thislogdate}/transcripts/transcripts.refgenome_stem.tmp_a /output/hydra16H1_transcriptome-annotation_BedTools_${thislogdate}/transcripts/transcripts.refgenome_stem.tmp_b /output/hydra16H1_transcriptome-annotation_BedTools_${thislogdate}/transcripts/transcripts.refgenome_stem.tmp_c /output/hydra16H1_transcriptome-annotation_BedTools_${thislogdate}/transcripts/transcripts.refgenome_stem.tmp_d >> /output/hydra16H1_transcriptome-annotation_BedTools_${thislogdate}/transcripts/transcripts.refgenome_stem.annotation; rm -rf /output/hydra16H1_transcriptome-annotation_BedTools_${thislogdate}/transcripts/transcripts.refgenome_stem.tmp_a /output/hydra16H1_transcriptome-annotation_BedTools_${thislogdate}/transcripts/transcripts.refgenome_stem.tmp_b /output/hydra16H1_transcriptome-annotation_BedTools_${thislogdate}/transcripts/transcripts.refgenome_stem.tmp_c /output/hydra16H1_transcriptome-annotation_BedTools_${thislogdate}/transcripts/transcripts.refgenome_stem.tmp_d ; cut -f4,10,11 /output/hydra16H1_transcriptome-annotation_BedTools_${thislogdate}/transcripts/transcripts.refgenome_stem.lncRNAfeatures.bed | sed "s/\t./\.\tncRNAdb\t\./g" >> /output/hydra16H1_transcriptome-annotation_BedTools_${thislogdate}/transcripts/transcripts.refgenome_stem.annotation\
     cut -f1,4 /output/hydra16H1_transcriptome-annotation_BedTools_${thislogdate}/transcripts/transcripts.refgenome_stem.annotation | sort | uniq >> /output/hydra16H1_transcriptome-annotation_BedTools_${thislogdate}/transcripts/transcripts.refgenome_stem.annotation.summary\
@@ -1080,8 +1103,8 @@ docker run --rm \
 # WARNING 3: User must provide:
 reference_fasta_dir="/path/from/working/dir/to/ref-transcriptome_dir"
 transgtf_dir="/path/from/working/dir/to/ref-transcriptome_dir"
-lncrnadb_dir="/path/from/working/dir/to//data_lncrnadb_dir"
-lncrnadb_fasta_dir="/path/from/working/dir/to/lncRNAdb.fasta_dir" #bedtools getfasta -name -fi genome.fa -bed /path/from/working/dir/to/lncRNAdb.bed > lncRNAdb.fasta
+lncrnadb_dir="/path/from/working/dir/to/data_lncrnadb_dir"
+lncrnadb_fasta_dir="/path/from/working/dir/to/lncRNAdb.fasta_dir" #bedtools getfasta -name -fi genome.fa -bed /path/from/working/dir/to/InHouse_lncRNAdb.bed > lncRNAdb.fasta
 
 docker run --rm \
   -v "${reference_fasta_dir}":/data_reference_fasta_dir \

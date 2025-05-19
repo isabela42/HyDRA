@@ -5,7 +5,7 @@ usage(){
 echo "
 Written by Isabela Almeida
 Created on Mar 13, 2025
-Last modified on May 16, 2025
+Last modified on May 19, 2025
 Version: ${version}
 
 #  _    _       _____  _____                    _            _ _            
@@ -47,7 +47,7 @@ long_raw_dir="/path/from/working/dir/to/data_long/" # Raw long_read.f* file(s) i
 fasta_splitter="/path/from/working/dir/to/fasta_splitter.py"
 rcorrector="/path/from/working/dir/to/rcorrector/run_rcorrector.pl"
 reformat="/path/from/working/dir/to/bbmap/reformat.sh"
-fuper="/path/from/working/dir/to/TranscriptomeAssemblyTools/FilterUncorrectabledPEfastq.py"
+fuper="/path/from/working/dir/to/TranscriptomeAssemblyTools/utilities/FilterUncorrectabledPEfastq.py"
 bbduk="/path/from/working/dir/to/bbmap/bbduk.sh"
 trinstats="/software/trinityrnaseq/trinityrnaseq-2.8.4/util/TrinityStats.pl"
 picardtool="java -jar /software/picard/picard-tools-2.19.0/picard.jar"
@@ -65,7 +65,7 @@ reference_fasta="/path/from/working/dir/to/ref-transcriptome.fasta"
 reference_gmap_db=reference_GMAP_genome_db_dir
 referencedir=/path/from/working/dir/to/
 transcriptome_bed="/path/from/working/dir/to/ref-transcriptome.bed"
-lncrnadb="/path/from/working/dir/to/lncRNAdb.bed"
+lncrnadb="/path/from/working/dir/to/lncRNAdb.bed" # as a default you may use docker/data/InHouse_lncRNAdb.bed file
 lncrnadb_fasta="/path/from/working/dir/to/lncRNAdb.fasta" #bedtools getfasta -name -fi genome.fa -bed ${lncrnadb} > lncRNAdb.fasta
 genome_proteins="/path/from/working/dir/to/protein-coding_reference-annotation.bed"
 gencodegenome="/path/from/working/dir/to/gencode.genome.fa" # e.g. <ftp://ftp.ebi.ac.uk/pub/databases/gencode/Gencode_human/release_36/GRCh38.p13.genome.fa.gz>
@@ -650,7 +650,7 @@ awk -v rpkm_cutoff="${low_rpkm_cutoff}" 'NR>0{if ($6 > rpkm_cutoff) print}' ${pr
 ###############################################################
 
 ## STEP 16H1 [resources: -m 20 -c 16 -w "10:00:00"]
-# WARNING 1: User must provide: name of reference_GMAP_genome_db_dir and its path separately; reference transcriptome BED file; lncRNA database BED file
+# WARNING 1: User must provide: name of reference_GMAP_genome_db_dir and its path separately; reference transcriptome BED file; lncRNA database BED file, as a default you may use docker/data/InHouse_lncRNAdb.bed file
 # WARNING 2: Reproduce for unspliced
 # WARNING 3: Same step can be done for Trinity assembly. Simply replace input info and stem of outputs
 thislogdate=$(date +'%d%m%Y%H%M%S%Z') 

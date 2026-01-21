@@ -1,0 +1,24 @@
+#!/bin/sh
+
+##########################################################################
+#
+#  Script:  hdr01_benchmark_StringTie2-fasta_22042025153935AEST.pbs
+#  Author:  Isabela Almeida
+#  Created: Tue Apr 22 03:39:35 PM AEST 2025 at QIMR Berghofer (Brisbane, Australia) - VSC
+#  Updated: Tue Apr 22 03:39:35 PM AEST 2025 at QIMR Berghofer (Brisbane, Australia) - VSC
+#  Version: v01
+#  Email:   Isabela.Almeida@qimrberghofer.edu.au
+#
+##########################################################################
+
+#PBS -N hdr01_benchmark_StringTie2-fasta_22042025153935AEST
+#PBS -r n
+#PBS -l mem=10GB,walltime=20:00:00,ncpus=1
+#PBS -m abe
+#PBS -M Isabela.Almeida@qimrberghofer.edu.au
+
+cd ${PBS_O_WORKDIR}
+module load cufflinks/2.2.1
+gffread stringtie2_11042025143926AEST/stringtie2-short.gtf -g /working/lab_julietF/isabelaA/data/references/GenomeGRCh38p7.fa -w stringtie2_11042025143926AEST/stringtie2-short.fasta
+gffread stringtie2_11042025143926AEST/stringtie2-long.gtf -g /working/lab_julietF/isabelaA/data/references/GenomeGRCh38p7.fa -w stringtie2_11042025143926AEST/stringtie2-long.fasta
+gffread stringtie2_11042025143926AEST/stringtie2-hybrid.gtf -g /working/lab_julietF/isabelaA/data/references/GenomeGRCh38p7.fa -w stringtie2_11042025143926AEST/stringtie2-hybrid.fasta

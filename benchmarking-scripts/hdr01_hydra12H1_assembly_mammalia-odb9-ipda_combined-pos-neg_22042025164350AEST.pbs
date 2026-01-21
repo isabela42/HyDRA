@@ -1,0 +1,45 @@
+#!/bin/sh
+
+##########################################################################
+#
+#  Script:  hdr01_hydra12H1_assembly_mammalia-odb9-ipda_combined-pos-neg_22042025164350AEST.pbs
+#  Author:  Isabela Almeida
+#  Created: Tue Apr 22 04:43:50 PM AEST 2025 at QIMR Berghofer (Brisbane, Australia) - VSC
+#  Updated: Tue Apr 22 04:43:50 PM AEST 2025 at QIMR Berghofer (Brisbane, Australia) - VSC
+#  Version: v01
+#  Email:   Isabela.Almeida@qimrberghofer.edu.au
+#
+##########################################################################
+
+#PBS -N hdr01_hydra12H1_assembly_mammalia-odb9-ipda_combined-pos-neg_22042025164350AEST
+#PBS -r n
+#PBS -l mem=5GB,walltime=80:00:00,ncpus=5
+#PBS -m abe
+#PBS -M Isabela.Almeida@qimrberghofer.edu.au
+
+#................................................
+#  Set main working directory
+#................................................
+
+## Change to main directory
+cd ${PBS_O_WORKDIR}
+
+echo ; echo "WARNING: The main directory for this run was set to ${PBS_O_WORKDIR}"; echo 
+
+#................................................
+#  Load Softwares, Libraries and Modules
+#................................................
+
+module load python/3.6.1
+module load busco/20161119
+module load ncbi-blast/2.2.31
+
+#................................................
+#  Run step
+#................................................
+
+echo "## Run BUSCO at" ; date ; echo
+BUSCO.py -i /working/lab_julietF/isabelaA/Project_HyDRA/benchmarking/assemblers/raw-data/unagi_20022025155133AEST/ipda_combined-pos-neg.fasta -l /working/lab_julietF/isabelaA/data/references/BuscoLineages/mammalia_odb9 -o mammalia-odb9-ipda_combined-pos-neg -m transcriptome -c 5 -t hydra12H1_qc_BUSCO_22042025164350AEST -sp human
+
+echo "## Move BUSCO files to output folder at" ; date ; echo
+mv run_mammalia-odb9-ipda_combined-pos-neg hydra12H1_qc_BUSCO_22042025164350AEST

@@ -1,0 +1,47 @@
+#!/bin/sh
+
+##########################################################################
+#
+#  Script:  hdr01_benchmark_rnaSPAdes_11042025143926AEST.pbs
+#  Author:  Isabela Almeida
+#  Created: Fri Apr 11 02:39:26 PM AEST 2025 at QIMR Berghofer (Brisbane, Australia) - VSC
+#  Updated: Fri Apr 11 02:39:26 PM AEST 2025 at QIMR Berghofer (Brisbane, Australia) - VSC
+#  Version: v01
+#  Email:   Isabela.Almeida@qimrberghofer.edu.au
+#
+##########################################################################
+
+#PBS -N hdr01_benchmark_rnaSPAdes_11042025143926AEST
+#PBS -r n
+#PBS -l mem=300GB,walltime=100:00:00,ncpus=40
+#PBS -m abe
+#PBS -M Isabela.Almeida@qimrberghofer.edu.au
+
+#................................................
+#  Set main working directory
+#................................................
+
+## Change to main directory
+cd ${PBS_O_WORKDIR}
+
+echo ; echo "WARNING: The main directory for this run was set to ${PBS_O_WORKDIR}"; echo 
+
+#................................................
+#  Load Softwares, Libraries and Modules
+#................................................
+
+module load SPAdes/3.14.1
+
+#................................................
+#  Run step
+#................................................
+
+mkdir rnaSPAdes_11042025143926AEST
+
+echo "## Run gzip at" ; date ; echo
+zcat -c /working/lab_julietF/isabelaA/Project_HyDRA/ipda_hdr01_all-sl/HYDRA_step06S1_ribodepletion_BBDuk_11092023150229AEST/header-fixed_ribo-depleted_adapter-trimmed_unfixrm*_R1.cor.fq.gz | gzip -c >> rnaSPAdes_11042025143926AEST/ribodepleted-short_R1.cor.fq.gz
+zcat -c /working/lab_julietF/isabelaA/Project_HyDRA/ipda_hdr01_all-sl/HYDRA_step06S1_ribodepletion_BBDuk_11092023150229AEST/header-fixed_ribo-depleted_adapter-trimmed_unfixrm*_R2.cor.fq.gz | gzip -c >> rnaSPAdes_11042025143926AEST/ribodepleted-short_R2.cor.fq.gz
+gzip -c /working/lab_julietF/isabelaA/Project_HyDRA/ipda_hdr01_all-sl/HYDRA_step06L1_ribodepletion_BBDuk_11092023141750AEST/ribo-depleted_corrected_polyA-trimmed_quality-trimmed_adapter-trimmed_PGAXXF230181_pass*.fasta >> rnaSPAdes_11042025143926AEST/ribodepleted-long.fa.gz
+
+echo "## Run rnaSPAdes at" ; date ; echo
+rnaspades.py --checkpoint all -t 40 -m 300 -1 rnaSPAdes_11042025143926AEST/ribodepleted-short_R1.cor.fq.gz -2 rnaSPAdes_11042025143926AEST/ribodepleted-short_R2.cor.fq.gz --nanopore rnaSPAdes_11042025143926AEST/ribodepleted-long.fa.gz -o HYDRA_step11H1_de-novo-transcriptome-assembly_rnaSPAdes_11042025143926AEST

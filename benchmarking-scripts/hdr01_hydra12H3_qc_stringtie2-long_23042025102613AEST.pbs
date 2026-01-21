@@ -1,0 +1,44 @@
+#!/bin/sh
+
+##########################################################################
+#
+#  Script:  hdr01_hydra12H3_qc_stringtie2-long_23042025102613AEST.pbs
+#  Author:  Isabela Almeida
+#  Created: Wed Apr 23 10:26:13 AM AEST 2025 at QIMR Berghofer (Brisbane, Australia) - VSC
+#  Updated: Wed Apr 23 10:26:13 AM AEST 2025 at QIMR Berghofer (Brisbane, Australia) - VSC
+#  Version: v01
+#  Email:   Isabela.Almeida@qimrberghofer.edu.au
+#
+##########################################################################
+
+#PBS -N hdr01_hydra12H3_qc_stringtie2-long_23042025102613AEST
+#PBS -r n
+#PBS -l mem=50GB,walltime=120:00:00,ncpus=15
+#PBS -m abe
+#PBS -M Isabela.Almeida@qimrberghofer.edu.au
+
+#................................................
+#  Set main working directory
+#................................................
+
+## Change to main directory
+cd ${PBS_O_WORKDIR}
+
+echo ; echo "WARNING: The main directory for this run was set to ${PBS_O_WORKDIR}"; echo 
+
+#................................................
+#  Load Softwares, Libraries and Modules
+#................................................
+
+module load transrate/1.0.3
+module load fastq-pair/20231003
+
+#................................................
+#  Run step
+#................................................
+
+echo "## Run TransRate at" ; date ; echo
+transrate --assembly /working/lab_julietF/isabelaA/Project_HyDRA/benchmarking/assemblers/treated-data/stringtie2_11042025143926AEST/stringtie2-long.fasta --reference /working/lab_julietF/mainaB/ReferenceGenomes/TranscriptomeGRCh38p7_ERCC.fa --threads 15 --output hydra12H3_qc_TransRate_23042025102613AEST/stringtie2-long
+
+echo "## Rename TransRate assemblies.csv file at" ; date ; echo
+mv hydra12H3_qc_TransRate_23042025102613AEST/stringtie2-long/assemblies.csv hydra12H3_qc_TransRate_23042025102613AEST/stringtie2-long/stringtie2-long_assemblies.csv

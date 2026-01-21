@@ -1,0 +1,45 @@
+#!/bin/sh
+
+##########################################################################
+#
+#  Script:  hdr01_benchmark_StringTie2-prep-minimap2_11042025143926AEST.pbs
+#  Author:  Isabela Almeida
+#  Created: Fri Apr 11 02:39:26 PM AEST 2025 at QIMR Berghofer (Brisbane, Australia) - VSC
+#  Updated: Fri Apr 11 02:39:26 PM AEST 2025 at QIMR Berghofer (Brisbane, Australia) - VSC
+#  Version: v01
+#  Email:   Isabela.Almeida@qimrberghofer.edu.au
+#
+##########################################################################
+
+#PBS -N hdr01_benchmark_StringTie2-prep-minimap2_11042025143926AEST
+#PBS -r n
+#PBS -l mem=120GB,walltime=75:00:00,ncpus=16
+#PBS -m abe
+#PBS -M Isabela.Almeida@qimrberghofer.edu.au
+
+#................................................
+#  Set main working directory
+#................................................
+
+## Change to main directory
+cd ${PBS_O_WORKDIR}
+
+echo ; echo "WARNING: The main directory for this run was set to ${PBS_O_WORKDIR}"; echo 
+
+#................................................
+#  Load Softwares, Libraries and Modules
+#................................................
+
+module load minimap2/2.27
+
+#................................................
+#  Run step
+#................................................
+
+echo "## Run Minimap2 at" ; date ; echo
+minimap2 -ax splice -t 16 /working/lab_julietF/isabelaA/data/references/GenomeGRCh38p7.fa rnaSPAdes_11042025143926AEST/ribodepleted-long.fa.gz -o stringtie2_11042025143926AEST/long-aligned.sam
+
+# based on
+# https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1009730
+# https://doi.org/10.1371/journal.pcbi.1009730
+# https://github.com/gpertea/stringtieq

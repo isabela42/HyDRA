@@ -1,0 +1,41 @@
+#!/bin/sh
+
+##########################################################################
+#
+#  Script:  hdr01_hydra12H2_qc_transcripts_22042025164840AEST.pbs
+#  Author:  Isabela Almeida
+#  Created: Tue Apr 22 04:48:40 PM AEST 2025 at QIMR Berghofer (Brisbane, Australia) - VSC
+#  Updated: Tue Apr 22 04:48:40 PM AEST 2025 at QIMR Berghofer (Brisbane, Australia) - VSC
+#  Version: v01
+#  Email:   Isabela.Almeida@qimrberghofer.edu.au
+#
+##########################################################################
+
+#PBS -N hdr01_hydra12H2_qc_transcripts_22042025164840AEST
+#PBS -r n
+#PBS -l mem=1GB,walltime=00:30:00,ncpus=1
+#PBS -m abe
+#PBS -M Isabela.Almeida@qimrberghofer.edu.au
+
+#................................................
+#  Set main working directory
+#................................................
+
+## Change to main directory
+cd ${PBS_O_WORKDIR}
+
+echo ; echo "WARNING: The main directory for this run was set to ${PBS_O_WORKDIR}"; echo 
+
+#................................................
+#  Load Softwares, Libraries and Modules
+#................................................
+
+module load trinityrnaseq/2.8.4
+module load samtools/1.9
+
+#................................................
+#  Run step
+#................................................
+
+echo "## Run TrinityStats at" ; date ; echo
+/software/trinityrnaseq/trinityrnaseq-2.8.4/util/TrinityStats.pl /working/lab_julietF/isabelaA/Project_HyDRA/benchmarking/assemblers/treated-data/rnaSPAdes_11042025143926AEST/HYDRA_step11H1_de-novo-transcriptome-assembly_rnaSPAdes_11042025143926AEST/transcripts.fasta >> hydra12H2_qc_TrinityStats_22042025164840AEST/trinityStats_transcripts

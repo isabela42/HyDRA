@@ -1,0 +1,43 @@
+#!/bin/sh
+
+##########################################################################
+#
+#  Script:  hdr01_benchmark_trinity_11042025143926AEST.pbs
+#  Author:  Isabela Almeida
+#  Created: Fri Apr 11 02:39:26 PM AEST 2025 at QIMR Berghofer (Brisbane, Australia) - VSC
+#  Updated: Fri Apr 11 02:39:26 PM AEST 2025 at QIMR Berghofer (Brisbane, Australia) - VSC
+#  Version: v01
+#  Email:   Isabela.Almeida@qimrberghofer.edu.au
+#
+##########################################################################
+
+#PBS -N hdr01_benchmark_trinity_11042025143926AEST
+#PBS -r n
+#PBS -l mem=250GB,walltime=85:00:00,ncpus=12
+#PBS -m abe
+#PBS -M Isabela.Almeida@qimrberghofer.edu.au
+
+#................................................
+#  Set main working directory
+#................................................
+
+## Change to main directory
+cd ${PBS_O_WORKDIR}
+
+echo ; echo "WARNING: The main directory for this run was set to ${PBS_O_WORKDIR}"; echo 
+
+#................................................
+#  Load Softwares, Libraries and Modules
+#................................................
+
+module load trinityrnaseq/2.8.4
+module load samtools/1.9
+
+#................................................
+#  Run step
+#................................................
+
+mkdir -p /working/lab_julietF/isabelaA/Project_HyDRA/benchmarking/assemblers/treated-data/trinity_11042025143926AEST
+
+echo "## Run Trinity at" ; date ; echo
+Trinity --seqType fq --max_memory 250G --left /working/lab_julietF/isabelaA/Project_HyDRA/ipda_hdr01_all-sl/HYDRA_step06S1_ribodepletion_BBDuk_11092023150229AEST/header-fixed_ribo-depleted_adapter-trimmed_unfixrm_FC-0081-2839_H7GWHDSX7_TCCGCCAATT-CAGCACGGAG_merged-lanes_R1.cor.fq.gz,/working/lab_julietF/isabelaA/Project_HyDRA/ipda_hdr01_all-sl/HYDRA_step06S1_ribodepletion_BBDuk_11092023150229AEST/header-fixed_ribo-depleted_adapter-trimmed_unfixrm_FC-0081-4583_H7GWHDSX7_ATACTTGTTC-TCGGCGGTTA_merged-lanes_R1.cor.fq.gz,/working/lab_julietF/isabelaA/Project_HyDRA/ipda_hdr01_all-sl/HYDRA_step06S1_ribodepletion_BBDuk_11092023150229AEST/header-fixed_ribo-depleted_adapter-trimmed_unfixrm_FT194_H7GWHDSX7_TAATTAGCGT-TTCTTAACCA_merged-lanes_R1.cor.fq.gz,/working/lab_julietF/isabelaA/Project_HyDRA/ipda_hdr01_all-sl/HYDRA_step06S1_ribodepletion_BBDuk_11092023150229AEST/header-fixed_ribo-depleted_adapter-trimmed_unfixrm_FT282_H7GWHDSX7_ATTAACAAGG-ACGAACAACA_merged-lanes_R1.cor.fq.gz,/working/lab_julietF/isabelaA/Project_HyDRA/ipda_hdr01_all-sl/HYDRA_step06S1_ribodepletion_BBDuk_11092023150229AEST/header-fixed_ribo-depleted_adapter-trimmed_unfixrm_FTEC-ABC-TC5521_H7GWHDSX7_CCGTGACCGA-CAACGTTCGG_merged-lanes_R1.cor.fq.gz,/working/lab_julietF/isabelaA/Project_HyDRA/ipda_hdr01_all-sl/HYDRA_step06S1_ribodepletion_BBDuk_11092023150229AEST/header-fixed_ribo-depleted_adapter-trimmed_unfixrm_HOSEpiC-ABC-TC3743_H7GWHDSX7_ATCGGCGAAG-AATTCTTGGA_merged-lanes_R1.cor.fq.gz,/working/lab_julietF/isabelaA/Project_HyDRA/ipda_hdr01_all-sl/HYDRA_step06S1_ribodepletion_BBDuk_11092023150229AEST/header-fixed_ribo-depleted_adapter-trimmed_unfixrm_HOSEpiC-donor1_H7GWHDSX7_TAGAATTGGA-TCAGATTAAC_merged-lanes_R1.cor.fq.gz,/working/lab_julietF/isabelaA/Project_HyDRA/ipda_hdr01_all-sl/HYDRA_step06S1_ribodepletion_BBDuk_11092023150229AEST/header-fixed_ribo-depleted_adapter-trimmed_unfixrm_HOSEpiC-donor2_H7GWHDSX7_AGGCAGCTCT-ACGTTAGCCG_merged-lanes_R1.cor.fq.gz,/working/lab_julietF/isabelaA/Project_HyDRA/ipda_hdr01_all-sl/HYDRA_step06S1_ribodepletion_BBDuk_11092023150229AEST/header-fixed_ribo-depleted_adapter-trimmed_unfixrm_IOSE397_H7GWHDSX7_TGATGGCTAC-ATGTTGTTGG_merged-lanes_R1.cor.fq.gz,/working/lab_julietF/isabelaA/Project_HyDRA/ipda_hdr01_all-sl/HYDRA_step06S1_ribodepletion_BBDuk_11092023150229AEST/header-fixed_ribo-depleted_adapter-trimmed_unfixrm_IOSE7576_H7GWHDSX7_GAATTACAAG-CTGAGCCGGT_merged-lanes_R1.cor.fq.gz --right /working/lab_julietF/isabelaA/Project_HyDRA/ipda_hdr01_all-sl/HYDRA_step06S1_ribodepletion_BBDuk_11092023150229AEST/header-fixed_ribo-depleted_adapter-trimmed_unfixrm_FC-0081-2839_H7GWHDSX7_TCCGCCAATT-CAGCACGGAG_merged-lanes_R2.cor.fq.gz,/working/lab_julietF/isabelaA/Project_HyDRA/ipda_hdr01_all-sl/HYDRA_step06S1_ribodepletion_BBDuk_11092023150229AEST/header-fixed_ribo-depleted_adapter-trimmed_unfixrm_FC-0081-4583_H7GWHDSX7_ATACTTGTTC-TCGGCGGTTA_merged-lanes_R2.cor.fq.gz,/working/lab_julietF/isabelaA/Project_HyDRA/ipda_hdr01_all-sl/HYDRA_step06S1_ribodepletion_BBDuk_11092023150229AEST/header-fixed_ribo-depleted_adapter-trimmed_unfixrm_FT194_H7GWHDSX7_TAATTAGCGT-TTCTTAACCA_merged-lanes_R2.cor.fq.gz,/working/lab_julietF/isabelaA/Project_HyDRA/ipda_hdr01_all-sl/HYDRA_step06S1_ribodepletion_BBDuk_11092023150229AEST/header-fixed_ribo-depleted_adapter-trimmed_unfixrm_FT282_H7GWHDSX7_ATTAACAAGG-ACGAACAACA_merged-lanes_R2.cor.fq.gz,/working/lab_julietF/isabelaA/Project_HyDRA/ipda_hdr01_all-sl/HYDRA_step06S1_ribodepletion_BBDuk_11092023150229AEST/header-fixed_ribo-depleted_adapter-trimmed_unfixrm_FTEC-ABC-TC5521_H7GWHDSX7_CCGTGACCGA-CAACGTTCGG_merged-lanes_R2.cor.fq.gz,/working/lab_julietF/isabelaA/Project_HyDRA/ipda_hdr01_all-sl/HYDRA_step06S1_ribodepletion_BBDuk_11092023150229AEST/header-fixed_ribo-depleted_adapter-trimmed_unfixrm_HOSEpiC-ABC-TC3743_H7GWHDSX7_ATCGGCGAAG-AATTCTTGGA_merged-lanes_R2.cor.fq.gz,/working/lab_julietF/isabelaA/Project_HyDRA/ipda_hdr01_all-sl/HYDRA_step06S1_ribodepletion_BBDuk_11092023150229AEST/header-fixed_ribo-depleted_adapter-trimmed_unfixrm_HOSEpiC-donor1_H7GWHDSX7_TAGAATTGGA-TCAGATTAAC_merged-lanes_R2.cor.fq.gz,/working/lab_julietF/isabelaA/Project_HyDRA/ipda_hdr01_all-sl/HYDRA_step06S1_ribodepletion_BBDuk_11092023150229AEST/header-fixed_ribo-depleted_adapter-trimmed_unfixrm_HOSEpiC-donor2_H7GWHDSX7_AGGCAGCTCT-ACGTTAGCCG_merged-lanes_R2.cor.fq.gz,/working/lab_julietF/isabelaA/Project_HyDRA/ipda_hdr01_all-sl/HYDRA_step06S1_ribodepletion_BBDuk_11092023150229AEST/header-fixed_ribo-depleted_adapter-trimmed_unfixrm_IOSE397_H7GWHDSX7_TGATGGCTAC-ATGTTGTTGG_merged-lanes_R2.cor.fq.gz,/working/lab_julietF/isabelaA/Project_HyDRA/ipda_hdr01_all-sl/HYDRA_step06S1_ribodepletion_BBDuk_11092023150229AEST/header-fixed_ribo-depleted_adapter-trimmed_unfixrm_IOSE7576_H7GWHDSX7_GAATTACAAG-CTGAGCCGGT_merged-lanes_R2.cor.fq.gz --CPU 12 --SS_lib_type RF --output trinity_11042025143926AEST --group_pairs_distance 280 --full_cleanup --bflyHeapSpaceMax 16G --normalize_max_read_cov 50 --bypass_java_version_check

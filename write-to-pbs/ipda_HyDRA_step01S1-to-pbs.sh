@@ -1,4 +1,5 @@
 #!/bin/bash
+shopt -s nullglob
 
 version="1.0.1"
 usage(){

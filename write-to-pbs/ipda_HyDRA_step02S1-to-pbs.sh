@@ -5,7 +5,7 @@ usage(){
 echo "
 Written by Isabela Almeida
 Created on May 25, 2023
-Last modified on May 15, 2025
+Last modified on Jan 30, 2026
 Version: ${version}
 
 Description: Write and submit PBS jobs for Step 02S1 (short-reads) of the
@@ -24,17 +24,17 @@ Resources used for pipeline development: -m 50 -c 15 -w "35:00:00"
                             path/from/working/dir/to/raw/reads/stem
                             of lanes/single-lane R1 and R2 FASTQ files individual lines
                             and no full stops.
-                            Extensions accepted: .fastq.gz/fq.gz/fastq/fq
+                            Extensions accepted: .fastq.gz/fq.gz/fastq/fq; _1/2_*/_R1/2_*
 
                             Col2:
                             path/from/working/dir/to/raw/reads/stem_R1.fastq.gz
                             If flag in col4 set to no, use * to replace lane info.
-                            Extensions accepted: .fastq.gz/fq.gz/fastq/fq
+                            Extensions accepted: .fastq.gz/fq.gz/fastq/fq; _1_*/_R1_*
 
                             Col3:
                             path/from/working/dir/to/raw/reads/stem_R2.fastq.gz
                             If flag in col4 set to no, use * to replace lane info.
-                            Extensions accepted: .fastq.gz/fq.gz/fastq/fq
+                            Extensions accepted: .fastq.gz/fq.gz/fastq/fq; _2_*/_R2_*
 
                             Col4:
                             yes|no
@@ -287,8 +287,8 @@ cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename
 cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file%%.*}" | sed 's/\(.*\)\..*/\1/')" | sed 's/\*//g'` ; echo "#................................................" >> ${pbs_stem}_${file}_${thislogdate}.pbs; done
 cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file%%.*}" | sed 's/\(.*\)\..*/\1/')" | sed 's/\*//g'` ; echo "" >> ${pbs_stem}_${file}_${thislogdate}.pbs; done
 cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file%%.*}" | sed 's/\(.*\)\..*/\1/')" | sed 's/\*//g'` ; echo 'echo "## Run gzip if flag yes at" ; date ; echo' >> ${pbs_stem}_${file}_${thislogdate}.pbs; done
-cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file%%.*}" | sed 's/\(.*\)\..*/\1/')" | sed 's/\*//g'` ; flag_merge=`grep "${path_file}" ${input} | cut -f4 | sort | uniq`; if [[ $flag_merge = "yes" ]]; then echo "zcat -c ${path_file}*_*1.f* | gzip -c >> ${out_path_step02S1_Rcorrector}/${file}_R1.fastq.gz" >> ${pbs_stem}_${file}_${thislogdate}.pbs; elif [[ $flag_merge = "no" ]]; then echo "#Flag to do not merge file" >> ${pbs_stem}_${file}_${thislogdate}.pbs; else echo "Unknown flag provided. Please provide either yes or no string and try again" >> ${pbs_stem}_${file}_${thislogdate}.pbs; fi; done
-cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file%%.*}" | sed 's/\(.*\)\..*/\1/')" | sed 's/\*//g'` ; flag_merge=`grep "${path_file}" ${input} | cut -f4 | sort | uniq`; if [[ $flag_merge = "yes" ]]; then echo "zcat -c ${path_file}*_*2.f* | gzip -c >> ${out_path_step02S1_Rcorrector}/${file}_R2.fastq.gz" >> ${pbs_stem}_${file}_${thislogdate}.pbs; elif [[ $flag_merge = "no" ]]; then echo "#Flag to do not merge file" >> ${pbs_stem}_${file}_${thislogdate}.pbs; else echo "Unknown flag provided. Please provide either yes or no string and try again" >> ${pbs_stem}_${file}_${thislogdate}.pbs; fi; done
+cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file%%.*}" | sed 's/\(.*\)\..*/\1/')" | sed 's/\*//g'` ; flag_merge=`grep "${path_file}" ${input} | cut -f4 | sort | uniq`; if [[ $flag_merge = "yes" ]]; then f1=`grep "${path_file}" ${input} | cut -f2`; echo "zcat -c ${f1} | gzip -c >> ${out_path_step02S1_Rcorrector}/${file}_R1.fastq.gz" >> ${pbs_stem}_${file}_${thislogdate}.pbs; elif [[ $flag_merge = "no" ]]; then echo "#Flag to do not merge file" >> ${pbs_stem}_${file}_${thislogdate}.pbs; else echo "Unknown flag provided. Please provide either yes or no string and try again" >> ${pbs_stem}_${file}_${thislogdate}.pbs; fi; done
+cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file%%.*}" | sed 's/\(.*\)\..*/\1/')" | sed 's/\*//g'` ; flag_merge=`grep "${path_file}" ${input} | cut -f4 | sort | uniq`; if [[ $flag_merge = "yes" ]]; then f2=`grep "${path_file}" ${input} | cut -f3`; echo "zcat -c ${f2} | gzip -c >> ${out_path_step02S1_Rcorrector}/${file}_R2.fastq.gz" >> ${pbs_stem}_${file}_${thislogdate}.pbs; elif [[ $flag_merge = "no" ]]; then echo "#Flag to do not merge file" >> ${pbs_stem}_${file}_${thislogdate}.pbs; else echo "Unknown flag provided. Please provide either yes or no string and try again" >> ${pbs_stem}_${file}_${thislogdate}.pbs; fi; done
 cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file%%.*}" | sed 's/\(.*\)\..*/\1/')" | sed 's/\*//g'` ; echo "" >> ${pbs_stem}_${file}_${thislogdate}.pbs; done
 
 cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file%%.*}" | sed 's/\(.*\)\..*/\1/')" | sed 's/\*//g'` ; echo 'echo "## Run Rcorrector at" ; date ; echo' >> ${pbs_stem}_${file}_${thislogdate}.pbs; done

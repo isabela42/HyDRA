@@ -5,7 +5,7 @@ usage(){
 echo "
 Written by Isabela Almeida
 Created on May 25, 2023
-Last modified on Jan 30, 2026
+Last modified on Feb 09, 2026
 Version: ${version}
 
 Description: Write and submit PBS jobs for Step 02S1 (short-reads) of the
@@ -301,7 +301,7 @@ cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename
 cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file%%.*}" | sed 's/\(.*\)\..*/\1/')" | sed 's/\*//g'` ; echo "" >> ${pbs_stem}_${file}_${thislogdate}.pbs; done
 
 cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file%%.*}" | sed 's/\(.*\)\..*/\1/')" | sed 's/\*//g'` ; echo 'echo "## Run Reformat at" ; date ; echo' >> ${pbs_stem}_${file}_${thislogdate}.pbs; done
-cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file%%.*}" | sed 's/\(.*\)\..*/\1/')" | sed 's/\*//g'` ; flag_reads=`grep -P "${path_file}\t" ${input} | cut -f5`; if [[ $flag_reads = "single" ]]; then echo "f1=\`ls ${out_path_step02S1_Rcorrector}/${file}*1.cor.f*\`; bash ${module_reformat} in=\${f1}" >> ${pbs_stem}_${file}_${thislogdate}.pbs; else echo "f1=\`ls ${out_path_step02S1_Rcorrector}/${file}*1.cor.f*\`; f2=\`ls ${out_path_step02S1_Rcorrector}/${file}*2.cor.f*\`; bash ${module_reformat} in=\${f1} in2=\${f2}" >> ${pbs_stem}_${file}_${thislogdate}.pbs; fi; done
+cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file%%.*}" | sed 's/\(.*\)\..*/\1/')" | sed 's/\*//g'` ; flag_reads=`grep -P "${path_file}\t" ${input} | cut -f5`; if [[ $flag_reads = "single" ]]; then echo "f1=(${out_path_step02S1_Rcorrector}/${file}*_{R1,1}*.cor.fq.gz); bash ${module_reformat} in=\${f1}" >> ${pbs_stem}_${file}_${thislogdate}.pbs; else echo "f1=(${out_path_step02S1_Rcorrector}/${file}*_{R1,1}*.cor.fq.gz); f2=(${out_path_step02S1_Rcorrector}/${file}*_{R2,2}*.cor.fq.gz); bash ${module_reformat} in=\${f1} in2=\${f2}" >> ${pbs_stem}_${file}_${thislogdate}.pbs; fi; done
 
 #................................................
 #  Submit PBS jobs

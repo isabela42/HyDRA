@@ -5,7 +5,7 @@ usage(){
 echo "
 Written by Isabela Almeida
 Created on May 25, 2023
-Last modified on May 15, 2025
+Last modified on Feb 24, 2026
 Version: ${version}
 
 Description: Write and submit PBS jobs for Step 02S2 (short-reads) of the
@@ -22,12 +22,12 @@ Resources used for pipeline development: -m 1 -c 1 -w "02:00:00"
                             
                             Col1:
                             path/from/working/dir/to/hydra02S1_short-cor_Rcorrector_DATE/stem
-                            of both _R1.cor.fq* and _R2.cor.fq* files in individual lines
+                            of both _R1*.cor.fq.gz and _R2*.cor.fq.gz files in individual lines
                             and no full stops.
 
                             Col2:
-                            path/from/working/dir/to/hydra02S1_short-cor_Rcorrector/stem_R1.cor.fq* (line 1)
-                            path/from/working/dir/to/hydra02S1_short-cor_Rcorrector/stem_R2.cor.fq* (line 2)
+                            path/from/working/dir/to/hydra02S1_short-cor_Rcorrector/stem_R1*.cor.fq.gz (line 1)
+                            path/from/working/dir/to/hydra02S1_short-cor_Rcorrector/stem_R2*.cor.fq.gz (line 2)
 
                             It does not matter if same stem 
                             appears more than once on this input file.
@@ -274,7 +274,7 @@ cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename
 cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file%%.*}" | sed 's/\(.*\)\..*/\1/')" | sed 's/\*//g'` ; echo "#................................................" >> ${pbs_stem}_${file}_${thislogdate}.pbs; done
 cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file%%.*}" | sed 's/\(.*\)\..*/\1/')" | sed 's/\*//g'` ; echo "" >> ${pbs_stem}_${file}_${thislogdate}.pbs; done
 cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file%%.*}" | sed 's/\(.*\)\..*/\1/')" | sed 's/\*//g'` ; echo 'echo "## Run FUPER at" ; date ; echo' >> ${pbs_stem}_${file}_${thislogdate}.pbs; done
-cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file%%.*}" | sed 's/\(.*\)\..*/\1/')" | sed 's/\*//g'` ; f1="${path_file}*1.cor.fq*"; f2="${path_file}*2.cor.fq*"; echo "python ${module_fuper} -1 ${f1} -2 ${f2} -s ${file}" >> ${pbs_stem}_${file}_${thislogdate}.pbs; done
+cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file%%.*}" | sed 's/\(.*\)\..*/\1/')" | sed 's/\*//g'` ; f1=(${path_file}*_{R1,1}*.cor.fq.gz); f2=(${path_file}*_{R2,2}*.cor.fq.gz); echo "python ${module_fuper} -1 ${f1} -2 ${f2} -s ${file}" >> ${pbs_stem}_${file}_${thislogdate}.pbs; done
 cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file%%.*}" | sed 's/\(.*\)\..*/\1/')" | sed 's/\*//g'` ; echo "" >> ${pbs_stem}_${file}_${thislogdate}.pbs; done
 
 cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file%%.*}" | sed 's/\(.*\)\..*/\1/')" | sed 's/\*//g'` ; echo 'echo "## Move FUPER results to output folder at" ; date ; echo' >> ${pbs_stem}_${file}_${thislogdate}.pbs; done

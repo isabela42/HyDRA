@@ -5,7 +5,7 @@ usage(){
 echo "
 Written by Isabela Almeida
 Created on Jun 05, 2023
-Last modified on May 15, 2025
+Last modified on Feb 26, 2026
 Version: ${version}
 
 Description: Write and submit PBS jobs for Step 04S1 (short-reads) of the
@@ -281,7 +281,7 @@ cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename
 cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file%%.*}" | sed 's/\(.*\)\..*/\1/')" | sed 's/\*//g'` ; echo "#................................................" >> ${pbs_stem}_${file}_${thislogdate}.pbs; done
 cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file%%.*}" | sed 's/\(.*\)\..*/\1/')" | sed 's/\*//g'` ; echo "" >> ${pbs_stem}_${file}_${thislogdate}.pbs; done
 cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file%%.*}" | sed 's/\(.*\)\..*/\1/')" | sed 's/\*//g'` ; echo 'echo "## Run Trimmomatic PE at" ; date ; echo' >> ${pbs_stem}_${file}_${thislogdate}.pbs; done
-cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file%%.*}" | sed 's/\(.*\)\..*/\1/')" | sed 's/\*//g'` ; f1="${path_file}*1.cor.fq"; f2="${path_file}*2.cor.fq"; adapters_fasta=`grep ${path_file} ${input} | cut -f3 | sort | uniq`; echo "trimmomatic PE -phred33 -threads ${ncpus} ${f1} ${f2} ${out_path_step04S1_Trimmomatic}/adapter-trimmed_${file}_R1.fq.gz ${out_path_step04S1_Trimmomatic}/unpaired_adapter-trimmed_${file}_R1.fq.gz ${out_path_step04S1_Trimmomatic}/adapter-trimmed_${file}_R2.fq.gz ${out_path_step04S1_Trimmomatic}/unpaired_adapter-trimmed_${file}_R2.fq.gz ILLUMINACLIP:${adapters_fasta}:2:30:10 SLIDINGWINDOW:4:20 MINLEN:75 HEADCROP:12" >> ${pbs_stem}_${file}_${thislogdate}.pbs; done
+cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file%%.*}" | sed 's/\(.*\)\..*/\1/')" | sed 's/\*//g'` ; f1=(${path_file}*_{R1,1}*.cor.fq); f2=(${path_file}*_{R2,2}*.cor.fq); adapters_fasta=`grep ${path_file} ${input} | cut -f3 | sort | uniq`; echo "trimmomatic PE -phred33 -threads ${ncpus} ${f1} ${f2} ${out_path_step04S1_Trimmomatic}/adapter-trimmed_${file}_R1.fq.gz ${out_path_step04S1_Trimmomatic}/unpaired_adapter-trimmed_${file}_R1.fq.gz ${out_path_step04S1_Trimmomatic}/adapter-trimmed_${file}_R2.fq.gz ${out_path_step04S1_Trimmomatic}/unpaired_adapter-trimmed_${file}_R2.fq.gz ILLUMINACLIP:${adapters_fasta}:2:30:10 SLIDINGWINDOW:4:20 MINLEN:75 HEADCROP:12" >> ${pbs_stem}_${file}_${thislogdate}.pbs; done
 
 #................................................
 #  Submit PBS jobs

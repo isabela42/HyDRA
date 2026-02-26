@@ -5,7 +5,7 @@ usage(){
 echo "
 Written by Isabela Almeida
 Created on May 25, 2023
-Last modified on Feb 24, 2026
+Last modified on Feb 26, 2026
 Version: ${version}
 
 Description: Write and submit PBS jobs for Step 02S2 (short-reads) of the
@@ -279,8 +279,8 @@ cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename
 
 cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file%%.*}" | sed 's/\(.*\)\..*/\1/')" | sed 's/\*//g'` ; echo 'echo "## Move FUPER results to output folder at" ; date ; echo' >> ${pbs_stem}_${file}_${thislogdate}.pbs; done
 cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file%%.*}" | sed 's/\(.*\)\..*/\1/')" | sed 's/\*//g'` ; file_path=`echo "$(dirname ${path_file})"` ; echo "mv ${file_path}/rmunfixable_${file}.log ${out_path_step02S2_FUPER}/" >> ${pbs_stem}_${file}_${thislogdate}.pbs; done
-cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file%%.*}" | sed 's/\(.*\)\..*/\1/')" | sed 's/\*//g'` ; file_path=`echo "$(dirname ${path_file})"` ; echo "mv ${file_path}/unfixrm_${file}*1.cor.fq ${out_path_step02S2_FUPER}/" >> ${pbs_stem}_${file}_${thislogdate}.pbs; done
-cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file%%.*}" | sed 's/\(.*\)\..*/\1/')" | sed 's/\*//g'` ; file_path=`echo "$(dirname ${path_file})"` ; echo "mv ${file_path}/unfixrm_${file}*2.cor.fq ${out_path_step02S2_FUPER}/" >> ${pbs_stem}_${file}_${thislogdate}.pbs; done
+cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file%%.*}" | sed 's/\(.*\)\..*/\1/')" | sed 's/\*//g'` ; file_path=`echo "$(dirname ${path_file})"` ; echo "mv ${file_path}/unfixrm_${file}*1*.cor.fq ${out_path_step02S2_FUPER}/" >> ${pbs_stem}_${file}_${thislogdate}.pbs; done
+cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file%%.*}" | sed 's/\(.*\)\..*/\1/')" | sed 's/\*//g'` ; file_path=`echo "$(dirname ${path_file})"` ; echo "mv ${file_path}/unfixrm_${file}*2*.cor.fq ${out_path_step02S2_FUPER}/" >> ${pbs_stem}_${file}_${thislogdate}.pbs; done
 
 #................................................
 #  Submit PBS jobs

@@ -29,7 +29,7 @@
       </ul>
     <li><a href="#usage">Usage</a></li>
     <ul>
-        <li><a href="#hydra-with-docker-container-image">Docker container image</a></li>
+        <li><a href="#hydra-with-container-image">Container images (Docker/Singularity)</a></li>
         <li><a href="#hydra-with-terminal-stdin">Terminal stdin</a></li>
         <li><a href="#hydra-with-write-to-pbs-bash-files">Write-to-pbs BASH files</a></li>
       </ul>
@@ -91,7 +91,7 @@ The scripts are organised as described below, where [S] stands for scripts meant
 <!-- GETTING STARTED -->
 ## Pipeline requirements 
 
-HyDRA is available in a series of BASH scripts that can be run on i) <a href="#hydra-with-docker-container-image">Docker container image</a>; ii) <a href="#hydra-with-terminal-stdin">terminal stdin</a>; or iii) <a href="#hydra-with-write-to-pbs-bash-files">write-to-pbs BASH files</a>. To run HyDRA with either one of these, you should clone the repo 
+HyDRA is available in a series of BASH scripts that can be run on i) <a href="#hydra-with-container-image">Container images (Docker/Singularity)</a>; ii) <a href="#hydra-with-terminal-stdin">terminal stdin</a>; or iii) <a href="#hydra-with-write-to-pbs-bash-files">write-to-pbs BASH files</a>. To run HyDRA with either one of these, you should clone the repo 
   
    ```sh
    git clone https://github.com/isabela42/HyDRA.git
@@ -101,13 +101,21 @@ HyDRA is available in a series of BASH scripts that can be run on i) <a href="#h
 
 The HyDRA pipeline requires a series of tools to be installed.
 
-Users can choose to build HyDRA's Docker container image. To do so, users will need to install Docker on their machines and run
+Users can choose to build their own HyDRA's Docker container image, use the image used in this repo or build a Singularity container image from our provided Docker container image. To do so, users will need to install Docker/Singularity on their machines. Please note Singularity is now called Apptainer.
+
+To build a Docker container image locally, clone the repo and run:
 
    ```sh
-   docker build -t hydra:1.0.1 .
+   docker build -t hydra:1.0.0 .
    ```
 
   Users can also choose to build the container image directly from VScode. Image building time varies with machine power - in our tests it took from 566s to 1826s. Image size is 22.7GB when build on iMac.
+
+To build a Singularity container image locally, clone the repo and run:
+
+   ```sh
+   apptainer build hydra1.0.0.sif docker-archive://hydra1.0.0.tar
+   ```
 
 Alternatively, users can choose to locally install all required tools ([docker/tools files](https://github.com/isabela42/HyDRA/tree/main/docker/tools)) using the following command lines:
 
@@ -146,11 +154,19 @@ In addition to paired short-read RNAseq and unpaired long-read RNAseq data, user
 
 ## Usage
 
-### HyDRA with Docker container image
+### HyDRA with container images (Docker/Singularity)
 
-HyDRA can be run using a Docker container image. To do so, users may choose to run individual commands on the HyDRA Docker container with [ipda_HyDRA_Docker.sh](https://github.com/isabela42/HyDRA/blob/main/ipda_HyDRA_docker.sh). These commands can be parsed in any terminal running BASH. Please see the help menu with `bash ipda_HyDRA_Docker.sh -h`, replace any necessary input info and parse individual command lines in any terminal running BASH. See info on how to <a href="#tools">build HyDRA's Docker container image here</a>.
+HyDRA can be run using a container images, both Docker or Singularity/Apptainer. We have prepared a bash script with a series of commands which users can run on the HyDRA Docker container with [ipda_HyDRA_Docker.sh](https://github.com/isabela42/HyDRA/blob/main/ipda_HyDRA_docker.sh). These commands can be parsed in any terminal running BASH. Please see the help menu with `bash ipda_HyDRA_Docker.sh -h`, replace any necessary input info and parse individual command lines in any terminal running BASH. See info on how to <a href="#tools">build HyDRA's container images here</a>.
 
 Alternatively, users can also choose to i) add <a href="#input-files">all input files</a> to /docker/data folder before ii) building container image, iii) initiate the container with `docker run -it hydra:1.0.1` and iv) run <a href="#hydra-with-terminal-stdin">terminal stdin commands</a>.
+
+
+To run HyDRA with a Singularity container image, users can direct;y run each specific tool inside the container image or even run an interactive shell inside the container image. For example, to run FastQC users can run the following command, where both input and output files are saved locally. See info on how to <a href="#tools">build HyDRA's container images here</a>.
+
+   ```sh
+   thislogdate=$(date +'%d%m%Y%H%M%S%Z')
+   apptainer exec hydra1.0.0.sif fastqc -t 1 --outdir /path/to/hydra01S1_qc-raw_FastQC_${thislogdate} short_read_1.fastq short_read_2.fastq --memory 10000
+   ```
 
 ### HyDRA with terminal stdin
 

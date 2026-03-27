@@ -3,7 +3,7 @@
 cd tools/
 
 # Miniconda
-wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O /tmp/miniconda.sh && \
+wget --quiet https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh -O /tmp/miniconda.sh && \
     bash /tmp/miniconda.sh -b -u -p /opt/conda && \
     rm /tmp/miniconda.sh && \
     conda clean -afy

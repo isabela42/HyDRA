@@ -34,7 +34,8 @@ RUN apt-get update && apt-get install -y \
 COPY . .
 
 # Install tools that require downloading with wget 
-RUN bash tools/wget_requirements.sh
+RUN bash tools/wget_requirements.sh && \
+    test -f /opt/conda/bin/conda || (echo "ERROR: Miniforge not installed in /opt/conda!" && exit 1)
 ENV PATH="/tools/bbmap:$PATH"
 ENV PATH="/opt/conda/bin:$PATH"
 RUN echo '#!/bin/bash\njava -jar /usr/local/bin/trimmomatic.jar "$@"' > /usr/local/bin/trimmomatic && \

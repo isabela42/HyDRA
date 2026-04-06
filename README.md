@@ -114,7 +114,7 @@ To build a Docker container image locally, clone the repo and run:
 To build a Singularity container image locally, clone the repo and run:
 
    ```sh
-   apptainer build hydra_step01.sif docker://isabela42/hydra:1.0.0
+   apptainer build hydra.sif docker://isabela42/hydra:1.0.0
    ```
 
 Alternatively, users can choose to locally install all required tools ([docker/tools files](https://github.com/isabela42/HyDRA/tree/main/docker/tools)) using the following command lines:

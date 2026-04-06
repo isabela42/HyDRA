@@ -29,7 +29,7 @@
       </ul>
     <li><a href="#usage">Usage</a></li>
     <ul>
-        <li><a href="#hydra-with-container-image">Container images (Docker/Singularity)</a></li>
+        <li><a href="#hydra-with-container-images-dockersingularity">Container images (Docker/Singularity)</a></li>
         <li><a href="#hydra-with-terminal-stdin">Terminal stdin</a></li>
         <li><a href="#hydra-with-write-to-pbs-bash-files">Write-to-pbs BASH files</a></li>
       </ul>
@@ -109,7 +109,7 @@ To build a Docker container image locally, clone the repo and run:
    docker build -t hydra:1.0.0 .
    ```
 
-  Users can also choose to build the container image directly from VScode. Image building time varies with machine power - in our tests it took from 566s to 1826s. Image size is 22.7GB when build on iMac.
+  Users can also choose to build the container image directly from VScode. Image building time varies with machine power - in our tests it took from 566s to 1826s. Image size is up to 22.7GB when build on iMac.
 
 To build a Singularity container image locally, clone the repo and run:
 
@@ -161,7 +161,7 @@ HyDRA can be run using a container images, both Docker or Singularity/Apptainer.
 Alternatively, users can also choose to i) add <a href="#input-files">all input files</a> to /docker/data folder before ii) building container image, iii) initiate the container with `docker run -it hydra:1.0.1` and iv) run <a href="#hydra-with-terminal-stdin">terminal stdin commands</a>.
 
 
-To run HyDRA with a Singularity container image, users can direct;y run each specific tool inside the container image or even run an interactive shell inside the container image. For example, to run FastQC users can run the following command, where both input and output files are saved locally. See info on how to <a href="#tools">build HyDRA's container images here</a>.
+To run HyDRA with a Singularity container image, users can directly run each specific tool inside the container image or even run an interactive shell inside the container image. For example, to run FastQC users can run the following command, where both input and output files are saved locally. See info on how to <a href="#tools">build HyDRA's container images here</a>.
 
    ```sh
    thislogdate=$(date +'%d%m%Y%H%M%S%Z')

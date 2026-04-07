@@ -165,7 +165,7 @@ To run HyDRA with a Singularity container image, users can directly run each spe
 
    ```sh
    thislogdate=$(date +'%d%m%Y%H%M%S%Z')
-   apptainer exec hydra1.0.0.sif fastqc -t 1 --outdir /path/to/hydra01S1_qc-raw_FastQC_${thislogdate} short_read_1.fastq short_read_2.fastq --memory 10000
+   apptainer exec hydra.sif fastqc -t 1 --outdir /path/to/hydra01S1_qc-raw_FastQC_${thislogdate} short_read_1.fastq short_read_2.fastq --memory 10000
    ```
 
 ### HyDRA with terminal stdin

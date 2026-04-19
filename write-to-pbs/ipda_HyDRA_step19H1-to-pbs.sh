@@ -5,7 +5,7 @@ usage(){
 echo "
 Written by Isabela Almeida
 Created on Jan 08, 2023
-Last modified on May 15, 2025
+Last modified on Apr 20, 2026
 Version: ${version}
 
 Description: Write and submit PBS jobs for Step 19H1 (hybrid) of the

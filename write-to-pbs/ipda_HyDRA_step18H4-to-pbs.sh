@@ -5,7 +5,7 @@ usage(){
 echo "
 Written by Isabela Almeida
 Created on Dec 12, 2023
-Last modified on Apr 19, 2026
+Last modified on Apr 20, 2026
 Version: ${version}
 
 Description: Write and submit PBS jobs for Step 18H4 (hybrid) of the
@@ -13,7 +13,7 @@ HYDRA pipeline (HYbrid De novo RNA Assembly pipeline).
 
 Usage: bash ipda_HyDRA_step18H4-to-pbs.sh -i "path/to/input/files" -p "PBS stem" -e "email" -m INT -c INT -w "HH:MM:SS"
 
-Resources used for pipeline development: -m 10 -c 1 -w "400:00:00"
+Resources used for pipeline development: -m 1 -c 1 -w "05:00:00"
 
 ## Input:
 
@@ -171,8 +171,8 @@ module_bedtools=bedtools/2.29.0
 # ezLncPred 1.4 - it doesn't work 
 #module_ezLncPred=ezLncPred/1.4
 
-# R 3.3.1
-module_R=R/3.3.1
+# R 4.5.0
+module_R=R/4.5.0
 
 # Python3 - python virtual environment inside ezLncPred module
 module_python=python/3.6.1

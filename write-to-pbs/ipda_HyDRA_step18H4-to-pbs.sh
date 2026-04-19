@@ -156,6 +156,7 @@ logfile=logfile_ipda_hydra18H4-to-pbs_${thislogdate}.txt
 #genome_proteins=/working/lab_julietF/mainaB/ReferenceGenomes/ProteinCoding_TranscriptomeGRCh38rel79.bed # gems
 
 ### WARNING! # PLEK may have switched the labels "coding" and "non-coding".
+plek="/working/lab_julietF/isabelaA/tools/PLEK.1.2/PLEK.py"
 
 #................................................
 #  Required modules, softwares and libraries
@@ -170,8 +171,8 @@ module_bedtools=bedtools/2.29.0
 # ezLncPred 1.4 - it doesn't work 
 #module_ezLncPred=ezLncPred/1.4
 
-# R 4.5.0
-module_R=R/4.5.0
+# R 3.3.1
+module_R=R/3.3.1
 
 # Python3 - python virtual environment inside ezLncPred module
 module_python=python/3.6.1

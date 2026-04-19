@@ -5,7 +5,7 @@ usage(){
 echo "
 Written by Isabela Almeida
 Created on Dec 12, 2023
-Last modified on Apr 19, 2026
+Last modified on Apr 20, 2026
 Version: ${version}
 
 Description: Write and submit PBS jobs for Step 18H2 (hybrid) of the
@@ -13,7 +13,7 @@ HYDRA pipeline (HYbrid De novo RNA Assembly pipeline).
 
 Usage: bash ipda_HyDRA_step18H2-to-pbs.sh -i "path/to/input/files" -p "PBS stem" -e "email" -m INT -c INT -w "HH:MM:SS"
 
-Resources used for pipeline development: -m 10 -c 1 -w "400:00:00"
+Resources used for pipeline development: -m 1 -c 1 -w "05:00:00"
 
 ## Input:
 

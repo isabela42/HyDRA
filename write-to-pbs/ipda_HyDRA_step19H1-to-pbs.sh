@@ -13,7 +13,7 @@ HYDRA pipeline (HYbrid De novo RNA Assembly pipeline).
 
 Usage: bash ipda_HyDRA_step19H1-to-pbs.sh -i "path/to/input/files" -p "PBS stem" -e "email" -m INT -c INT -w "HH:MM:SS"
 
-Resources used for pipeline development: -m 120 -c 16 -w "60:00:00"
+Resources used for pipeline development: -m 20 -c 7 -w "10:00:00"
 
 ## Input:
 

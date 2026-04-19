@@ -170,8 +170,8 @@ module_bedtools=bedtools/2.29.0
 # ezLncPred 1.4 - it doesn't work 
 #module_ezLncPred=ezLncPred/1.4
 
-# R 3.3.1
-module_R=R/3.3.1
+# R 4.5.0
+module_R=R/4.5.0
 
 # Python3 - python virtual environment inside ezLncPred module
 module_python=python/3.6.1

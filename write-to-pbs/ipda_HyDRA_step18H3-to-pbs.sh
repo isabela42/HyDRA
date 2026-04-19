@@ -8,10 +8,10 @@ Created on Dec 12, 2023
 Last modified on Apr 19, 2026
 Version: ${version}
 
-Description: Write and submit PBS jobs for Step 18H1 (hybrid) of the
+Description: Write and submit PBS jobs for Step 18H3 (hybrid) of the
 HYDRA pipeline (HYbrid De novo RNA Assembly pipeline).
 
-Usage: bash ipda_HyDRA_step18H1-to-pbs.sh -i "path/to/input/files" -p "PBS stem" -e "email" -m INT -c INT -w "HH:MM:SS"
+Usage: bash ipda_HyDRA_step18H3-to-pbs.sh -i "path/to/input/files" -p "PBS stem" -e "email" -m INT -c INT -w "HH:MM:SS"
 
 Resources used for pipeline development: -m 10 -c 1 -w "400:00:00"
 
@@ -128,7 +128,7 @@ do
         w) walltime="${OPTARG}";;    # Clock walltime required for PBS job
         h) Help ; exit;;             # Print Help and exit
         v) echo "${version}"; exit;; # Print version and exit
-        ?) echo script usage: bash ipda_HyDRA_step18H1-to-pbs.sh -i path/to/input/files -p PBS stem -e email -m INT -c INT -w "HH:MM:SS" >&2
+        ?) echo script usage: bash ipda_HyDRA_step18H3-to-pbs.sh -i path/to/input/files -p PBS stem -e email -m INT -c INT -w "HH:MM:SS" >&2
            exit;;
     esac
 done
@@ -143,7 +143,7 @@ done
 # and memory/CPU usage for all executions
 thislogdate=$(date +'%d%m%Y%H%M%S%Z')
 human_thislogdate=`date`
-logfile=logfile_ipda_hydra18H1-to-pbs_${thislogdate}.txt
+logfile=logfile_ipda_hydra18H3-to-pbs_${thislogdate}.txt
 
 #................................................
 #  Additional information
@@ -181,17 +181,17 @@ module_python=python/3.6.1
 #................................................
 
 ## Set stem for output directories
-out_path_step18H1_ezLncPred="hydra18H1_coding-potential_ezLncPred-CPC2_${thislogdate}"
+out_path_step18H3_ezLncPred="hydra18H3_coding-potential_ezLncPred-CNCI_${thislogdate}"
 
 ## Create output directories
-mkdir -p ${out_path_step18H1_ezLncPred}
+mkdir -p ${out_path_step18H3_ezLncPred}
 
 #................................................
 #  Print Execution info to user
 #................................................
 
 date
-echo "## Executing bash ipda_HyDRA_step18H1-to-pbs.sh"
+echo "## Executing bash ipda_HyDRA_step18H3-to-pbs.sh"
 echo "## This execution PID: ${pid}"
 echo
 echo "## Given inputs:"
@@ -205,7 +205,7 @@ echo "## PBS job walltime required:   ${walltime}"
 echo
 echo "## Outputs created:"
 echo
-echo "## Output files saved to:       ${out_path_step18H1_ezLncPred}"
+echo "## Output files saved to:       ${out_path_step18H3_ezLncPred}"
 echo "## logfile will be saved as:    ${logfile}"
 echo
 
@@ -223,7 +223,7 @@ echo
 exec &> "${logfile}"
 
 date
-echo "## Executing bash ipda_HyDRA_step18H1-to-pbs.sh"
+echo "## Executing bash ipda_HyDRA_step18H3-to-pbs.sh"
 echo "## This execution PID: ${pid}"
 echo
 echo "## Given inputs:"
@@ -237,7 +237,7 @@ echo "## PBS job walltime required:   ${walltime}"
 echo
 echo "## Outputs created:"
 echo
-echo "## Output files saved to:       ${out_path_step18H1_ezLncPred}"
+echo "## Output files saved to:       ${out_path_step18H3_ezLncPred}"
 echo "## This is logfile:             ${logfile}"
 
 set -v
@@ -298,20 +298,20 @@ cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename
 cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file}" | sed 's/\(.*\)\..*/\1/')"` ; echo "#................................................" >> ${pbs_stem}_${file}_${thislogdate}.pbs; done
 cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file}" | sed 's/\(.*\)\..*/\1/')"` ; echo "" >> ${pbs_stem}_${file}_${thislogdate}.pbs; done
 cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file}" | sed 's/\(.*\)\..*/\1/')"` ; echo 'echo "## Retrieve high-confidence protein-coding transcripts (for comparison) at" ; date ; echo' >> ${pbs_stem}_${file}_${thislogdate}.pbs; done
-cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file}" | sed 's/\(.*\)\..*/\1/')"` ; mkdir -p ${out_path_step18H1_ezLncPred}/${file} ; annotation=`grep ${path_file} ${input} | cut -f2` ; main_annotation=`echo "$(basename "${annotation}" | sed 's/\(.*\)\..*/\1/')"` ; genome_proteins=`grep "${path_file}" ${input} | cut -f3 | sort | uniq`; echo "bedtools intersect -wo -s -f 0.6 -r -a ${annotation} -b ${genome_proteins} >> ${out_path_step18H1_ezLncPred}/${file}/${main_annotation}.proteincoding.bed" >> ${pbs_stem}_${file}_${thislogdate}.pbs; done
+cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file}" | sed 's/\(.*\)\..*/\1/')"` ; mkdir -p ${out_path_step18H3_ezLncPred}/${file} ; annotation=`grep ${path_file} ${input} | cut -f2` ; main_annotation=`echo "$(basename "${annotation}" | sed 's/\(.*\)\..*/\1/')"` ; genome_proteins=`grep "${path_file}" ${input} | cut -f3 | sort | uniq`; echo "bedtools intersect -wo -s -f 0.6 -r -a ${annotation} -b ${genome_proteins} >> ${out_path_step18H3_ezLncPred}/${file}/${main_annotation}.proteincoding.bed" >> ${pbs_stem}_${file}_${thislogdate}.pbs; done
 cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file}" | sed 's/\(.*\)\..*/\1/')"` ; echo "" >> ${pbs_stem}_${file}_${thislogdate}.pbs; done
 
-cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file}" | sed 's/\(.*\)\..*/\1/')"` ; echo 'echo "## Run ezLncPred with CPC2 at" ; date ; echo' >> ${pbs_stem}_${file}_${thislogdate}.pbs; done
-cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file}" | sed 's/\(.*\)\..*/\1/')"` ; echo "ezLncPred -i ${path_file} -o ${out_path_step18H1_ezLncPred}/${file}/${file}.CPC2 CPC2" >> ${pbs_stem}_${file}_${thislogdate}.pbs; done
+cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file}" | sed 's/\(.*\)\..*/\1/')"` ; echo 'echo "## Run ezLncPred with CNCI at" ; date ; echo' >> ${pbs_stem}_${file}_${thislogdate}.pbs; done
+cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file}" | sed 's/\(.*\)\..*/\1/')"` ; echo "ezLncPred -i ${path_file} -o ${out_path_step18H3_ezLncPred}/${file}/${file}.CNCI CNCI -p ve" >> ${pbs_stem}_${file}_${thislogdate}.pbs; done
 cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file}" | sed 's/\(.*\)\..*/\1/')"` ; echo "" >> ${pbs_stem}_${file}_${thislogdate}.pbs; done
 
-cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file}" | sed 's/\(.*\)\..*/\1/')"` ; echo 'echo "## Separate coding and noncoding transcripts [CPC2] at" ; date ; echo' >> ${pbs_stem}_${file}_${thislogdate}.pbs; done
-cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file}" | sed 's/\(.*\)\..*/\1/')"` ; echo "cut -f1,7,8 ${out_path_step18H1_ezLncPred}/${file}/${file}.CPC2 | grep -w "coding" | sort | uniq >> ${out_path_step18H1_ezLncPred}/${file}/${file}.CPC2.proteincoding" >> ${pbs_stem}_${file}_${thislogdate}.pbs; done
-cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file}" | sed 's/\(.*\)\..*/\1/')"` ; echo "cut -f1,7,8 ${out_path_step18H1_ezLncPred}/${file}/${file}.CPC2 | grep -w "noncoding" | sort | uniq >> ${out_path_step18H1_ezLncPred}/${file}/${file}.CPC2.noncoding" >> ${pbs_stem}_${file}_${thislogdate}.pbs; done
+cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file}" | sed 's/\(.*\)\..*/\1/')"` ; echo 'echo "## Separate coding and noncoding transcripts [CNCI] at" ; date ; echo' >> ${pbs_stem}_${file}_${thislogdate}.pbs; done
+cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file}" | sed 's/\(.*\)\..*/\1/')"` ; echo "cat ${out_path_step18H3_ezLncPred}/${file}/${file}.CNCI/CNCI.index | tail -n +2 | cut -f1,2,3 | grep -Pe \"\tcoding\" | awk 'NR>0{printf \"%s\t%.2f\n\", \$1,\$3}' | sort | uniq >> ${out_path_step18H3_ezLncPred}/${file}/${file}.CNCI.proteincoding" >> ${pbs_stem}_${file}_${thislogdate}.pbs; done
+cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file}" | sed 's/\(.*\)\..*/\1/')"` ; echo "cat ${out_path_step18H3_ezLncPred}/${file}/${file}.CNCI/CNCI.index | tail -n +2 | cut -f1,2,3 | grep -Pe \"\tnoncoding\" | awk 'NR>0{printf \"%s\t%.2f\n\", \$1,\$3}' | sort | uniq >> ${out_path_step18H3_ezLncPred}/${file}/${file}.CNCI.noncoding" >> ${pbs_stem}_${file}_${thislogdate}.pbs; done
 cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file}" | sed 's/\(.*\)\..*/\1/')"` ; echo "" >> ${pbs_stem}_${file}_${thislogdate}.pbs; done
 
 cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file}" | sed 's/\(.*\)\..*/\1/')"` ; echo 'echo "## Check protein coding transcripts count at" ; date ; echo' >> ${pbs_stem}_${file}_${thislogdate}.pbs; done
-cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file}" | sed 's/\(.*\)\..*/\1/')"` ; annotation=`grep ${path_file} ${input} | cut -f2` ; echo "number=\`cut -f1 ${annotation} ${out_path_step18H1_ezLncPred}/${file}/${file}.CPC2.proteincoding | tail -n +2 | sort | uniq -c | grep -c \" 2 \"\` ; echo \"${out_path_step18H1_ezLncPred}/${file}/${file}\tCPC2 Annotated ptcoding classified as ptcoding\t${number}\" >> ${out_path_step18H1_ezLncPred}/${file}/${file}.CPC2.proteincodingtest" >> ${pbs_stem}_${file}_${thislogdate}.pbs; done
+cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename "${path_file}" | sed 's/\(.*\)\..*/\1/')"` ; annotation=`grep ${path_file} ${input} | cut -f2` ; echo "number=\`cut -f1 ${annotation} ${out_path_step18H3_ezLncPred}/${file}/${file}.CNCI.proteincoding | tail -n +2 | sort | uniq -c | grep -c \" 2 \"\` ; echo \"${out_path_step18H3_ezLncPred}/${file}/${file}\tCNCI Annotated ptcoding classified as ptcoding\t${number}\" >> ${out_path_step18H3_ezLncPred}/${file}/${file}.CNCI.proteincodingtest" >> ${pbs_stem}_${file}_${thislogdate}.pbs; done
 
 #................................................
 #  Submit PBS jobs
@@ -320,7 +320,8 @@ cut -f1 ${input} | sort | uniq | while read path_file; do file=`echo "$(basename
 ## Submit PBS jobs 
 ls ${pbs_stem}_*${thislogdate}.pbs | while read pbs; do echo ; echo "#................................................" ; echo "# This is PBS: ${pbs}" ;  echo "#" ; echo "# main command line(s): $(tail -n11 ${pbs} | head -n1)" ; echo "#                       $(tail -n8 ${pbs} | head -n1)" ; echo "#                       $(tail -n5 ${pbs} | head -n1)" ; echo "#                       $(tail -n4 ${pbs} | head -n1)" ; echo "#                       $(tail -n1 ${pbs})" ; echo "#" ; echo "# now submitting PBS" ; echo "qsub ${pbs}" ; qsub ${pbs} ; echo "#................................................" ; done
 
-date ## Status of all user jobs (including HYDRA step 18H1 jobs) at
+
+date ## Status of all user jobs (including HYDRA step 18H3 jobs) at
 qstat -u "$user"
 
 # This will remove $VARNAMES from output file with the actual $VARVALUE
@@ -338,7 +339,7 @@ sed -i 's,${module_R},'"${module_R}"',g' "$logfile"
 sed -i 's,${module_gcc},'"${module_gcc}"',g' "$logfile"
 sed -i 's,${module_python},'"${module_python}"',g' "$logfile"
 sed -i 's,${module_bedtools},'"${module_bedtools}"',g' "$logfile"
-sed -i 's,${out_path_step18H1_ezLncPred},'"${out_path_step18H1_ezLncPred}"',g' "$logfile"
+sed -i 's,${out_path_step18H3_ezLncPred},'"${out_path_step18H3_ezLncPred}"',g' "$logfile"
 sed -i 's,${logfile},'"${logfile}"',g' "$logfile"
 sed -n -e :a -e '1,3!{P;N;D;};N;ba' $logfile > tmp ; mv tmp $logfile
 set +v

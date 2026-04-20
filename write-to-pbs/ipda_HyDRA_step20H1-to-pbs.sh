@@ -5,7 +5,7 @@ usage(){
 echo "
 Written by Isabela Almeida
 Created on Jan 08, 2024
-Last modified on May 15, 2025
+Last modified on Apr 20, 2026
 Version: ${version}
 
 Description: Write and submit PBS jobs for Step 20H1 (hybrid) of the
@@ -21,8 +21,10 @@ Resources used for pipeline development: -m 1 -c 1 -w "01:00:00"
                             directory. This TSV file should contain:                            
 
                             Col1:
-                            path/from/working/dir/to/hydra18H1_coding-potential_ezLncPred_DATE/stem/stem
-                            of all *.noncoding files, but don't include .CNCI.noncoding, .CPAT.noncoding and .CPC2.noncoding themselves
+                            path/from/working/dir/to/hydra18H*_coding-potential_ezLncPred-*_DATE/stem/stem
+                            of all *.noncoding files, but don't include
+                            .CNCI.noncoding, .CPAT.noncoding, .CPC2.noncoding themselves
+                            Also please provide literal wildcard on hydra18H*_coding-potential_ezLncPred-*_DATE
 
                             Col2:
                             path/from/working/dir/to/hydra19H1_lncRNA-potential_FEELnc_DATE/stem/codport_stem/stem.lncRNAclasses.txt
@@ -77,7 +79,7 @@ Pipeline description:
 
 #   LONG NONCODING RNA DISCOVERY
 #   ------------------------------------------------------------------------------------------------------------
-#   18 [H] Predict coding potential (1ezLncPred)
+#   18 [H] Predict coding potential (1ezLncPred - CPC2, 2ezLncPred - CPAT, 3ezLncPred - CNCI, 4ezLncPred - PLEK)
 #   19 [H] Identify long noncoding RNAs (1FEELnc)
 #-->20 [H] Define lncRNAs (1Bash)
 #   21 [H] Retrieve metrics, annotation and filter-out protein-coding overlaps (1BedTools, 2PBLAT)

@@ -82,7 +82,7 @@ The scripts are organised as described below, where [S] stands for scripts meant
 
 3. LncRNA discovery scripts
 
-    * Script 18 [H] Predict coding potential (18H1 - ezLncPred)
+    * Script 18 [H] Predict coding potential (18H1 - ezLncPred CPC2, 18H2 - ezLncPred CPAT, 18H3 - ezLncPred CNCI, 18H4 - ezLncPred PLEK)
     * Script 19 [H] Identify long noncoding RNAs (19H1 - FEELnc)
     * Script 20 [H] Define lncRNAs (20H1 - Bash)
     * Script 21 [H] Retrieve metrics, annotation and filter-out protein-coding overlaps (21H1 - BedTools; 21H2 - PBLAT)

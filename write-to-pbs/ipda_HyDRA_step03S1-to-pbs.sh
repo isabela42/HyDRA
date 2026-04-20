@@ -5,7 +5,7 @@ usage(){
 echo "
 Written by Isabela Almeida
 Created on Jun 01, 2023
-Last modified on Feb 26, 2026
+Last modified on Apr 20, 2026
 Version: ${version}
 
 Description: Write and submit PBS jobs for Step 03S1 (short-reads) of the
@@ -81,7 +81,7 @@ Pipeline description:
 
 #   LONG NONCODING RNA DISCOVERY
 #   ------------------------------------------------------------------------------------------------------------
-#   18 [H] Predict coding potential (1ezLncPred)
+#   18 [H] Predict coding potential (1ezLncPred - CPC2, 2ezLncPred - CPAT, 3ezLncPred - CNCI, 4ezLncPred - PLEK)
 #   19 [H] Identify long noncoding RNAs (1FEELnc)
 #   20 [H] Define lncRNAs (1Bash)
 #   21 [H] Retrieve metrics, annotation and filter-out protein-coding overlaps (1BedTools, 2PBLAT)

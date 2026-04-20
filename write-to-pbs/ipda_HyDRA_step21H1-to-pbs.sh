@@ -21,7 +21,7 @@ Resources used for pipeline development: -m 1 -c 3 -w "01:00:00"
                             directory. This TSV file should contain:                            
 
                             Col1:
-                            path/from/working/dir/to/hydra18H1_coding-potential_ezLncPred_DATE/stem/
+                            path/from/working/dir/to/hydra20H1_coding-potential_ezLncPred_DATE/stem/
                             ezlncpred-and-feelnc.noncoding
 
                             Col2:

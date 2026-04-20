@@ -142,7 +142,7 @@ done
 # and memory/CPU usage for all executions
 thislogdate=$(date +'%d%m%Y%H%M%S%Z')
 human_thislogdate=`date`
-logfile=logfile_ipda_HyDRA20H1-to-pbs_${thislogdate}.txt
+logfile=logfile_ipda_hydra20H1-to-pbs_${thislogdate}.txt
 
 #................................................
 #  Set and create output path

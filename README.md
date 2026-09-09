@@ -211,7 +211,7 @@ Distributed under the MIT License. See [LICENSE][license-url] for more informati
 <!-- CONTACT -->
 ## Contact
 
-Please contact [Isabela Almeida](mb.isabela42@gmail.com) if you have any enquires.
+Please contact [Isabela Almeida](mailto:mb.isabela42@gmail.com) if you have any enquires.
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->

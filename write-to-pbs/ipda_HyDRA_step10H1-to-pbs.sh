@@ -5,7 +5,7 @@ usage(){
 echo "
 Written by Isabela Almeida
 Created on Aug 10, 2023
-Last modified on Apr 20, 2026
+Last modified on Jul 14, 2026
 Version: ${version}
 
 Description: Write and submit PBS jobs for Step 10H1 (hybrid) of the
@@ -522,8 +522,8 @@ pbs=`echo ${pbs_e} | cut -d"." -f1`
 
 R1raw=`grep -A1 "## Run Rcorrector at" ${pbs}.pbs | tail -n1 | cut -d" " -f8`
 R2raw=`grep -A1 "## Run Rcorrector at" ${pbs}.pbs | tail -n1 | cut -d" " -f10`
-R1cor=`grep -A1 "## Run Reformat at" ${pbs}.pbs | tail -n1 | cut -d" " -f2 | cut -d"=" -f2`
-R2cor=`grep -A1 "## Run Reformat at" ${pbs}.pbs | tail -n1 | cut -d" " -f4 | cut -d"=" -f2`
+R1cor=`grep -A1 "## Run Reformat at" ${pbs}.pbs | tail -n1 | cut -d" " -f1 | cut -d"=" -f2 | cut -c2- | rev | cut -c3- | rev`
+R2cor=`grep -A1 "## Run Reformat at" ${pbs}.pbs | tail -n1 | cut -d" " -f2 | cut -d"=" -f2 | cut -c2- | rev | cut -c3- | rev`
 #R1cor=`grep -A1 "## Run Reformat at" ${pbs}.pbs | tail -n1 | cut -d" " -f2 | cut -d'\`' -f1` # for unmerged files
 #R2cor=`grep -A1 "## Run Reformat at" ${pbs}.pbs | tail -n1 | cut -d" " -f4 | cut -d'\`' -f1` # for unmerged files
 
